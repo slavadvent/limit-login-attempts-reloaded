@@ -618,7 +618,7 @@ class LimitLoginAttempts {
 
 	// delete after setting up the letter
 	public function my_plugin_view_email_page() {
-		echo require_once LLA_PLUGIN_DIR . '/views/emails/security-report.php';
+		echo require LLA_PLUGIN_DIR . '/views/emails/security-report.php';
 	}
 	// delete after setting up the letter
 
