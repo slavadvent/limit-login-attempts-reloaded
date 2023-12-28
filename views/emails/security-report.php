@@ -20,11 +20,22 @@ $link = $domain['scheme'] . '://' . $domain['host'];
     <style type="text/css">
         @font-face {
             font-family: 'CoFo Sans';
-            src: url(<?php echo $link ?>'/wp-content/themes/llar/assets/fonts/CoFoSans-Regular.eot') format('embedded-opentype');
-            src: url(<?php echo $link ?>'/wp-content/themes/llar/assets/fonts/CoFoSans-Regular.woff') format('woff');
-            src: url(<?php echo $link ?>'/wp-content/themes/llar/assets/fonts/CoFoSans-Regular.woff2') format('woff2');
-            src: url(<?php echo $link ?>'/wp-content/themes/llar/assets/fonts/CoFoSans-Regular.ttf') format('truetype');
+            src: url(<?php echo $link . '/wp-content/themes/llar/assets/fonts/CoFoSans-Regular.eot' ?>) format('embedded-opentype');
+            src: url(<?php echo $link . '/wp-content/themes/llar/assets/fonts/CoFoSans-Regular.woff' ?>) format('woff');
+            src: url(<?php echo $link . '/wp-content/themes/llar/assets/fonts/CoFoSans-Regular.woff2' ?>) format('woff2');
+            src: url(<?php echo $link . '/wp-content/themes/llar/assets/fonts/CoFoSans-Regular.ttf' ?>) format('truetype');
             font-weight: 400;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'CoFo Sans';
+            src: url(<?php echo $link . '/wp-content/themes/llar/assets/fonts/CoFoSans-Medium.eot' ?>) format('embedded-opentype');
+            src: url(<?php echo $link . '/wp-content/themes/llar/assets/fonts/CoFoSans-Medium.woff' ?>) format('woff');
+            src: url(<?php echo $link . '/wp-content/themes/llar/assets/fonts/CoFoSans-Medium.woff2' ?>) format('woff2');
+            src: url(<?php echo $link . '/wp-content/themes/llar/assets/fonts/CoFoSans-Medium.ttf' ?>) format('truetype');
+            font-weight: 500;
             font-style: normal;
             font-display: swap;
         }
@@ -39,179 +50,263 @@ $link = $domain['scheme'] . '://' . $domain['host'];
             font-family: CoFo Sans, arial;
             font-style: normal;
             font-weight: 400;
+            line-height: 1.5;
             color: #2A2F40;
             padding-top: 140px;
             margin: 0 auto;
         }
 
-        table.llar_weekly_digest_header {
+        table.llar_weekly_digest_table {
             background-color: #ffffff;
+            border-radius: 20px;
+            padding-left: 30px;
+            padding-right: 30px;
+        }
+
+        .llar_weekly_digest_header td {
+            margin-left: 30px;
+            margin-right: 30px;
+        }
+
+        .llar_weekly_digest_logo {
+            margin: 30px auto;
+        }
+
+        .llar_weekly_digest_logo img {
+            width: 158px;
+        }
+
+        tbody.llar_weekly_digest_body {
+            position: relative;
+            background-image: url("<?php echo LLA_PLUGIN_URL . 'assets/css/images/security-report-bg.jpg' ?>");
+            background-size: cover;
             border-radius: 20px;
         }
 
-        a {
-            text-decoration: none;
+        .llar_weekly_digest_body__title {
+            font-size: 24px;
+            font-weight: 500;
+            color: #2A2F40;
         }
+
+        .llar_weekly_digest_body__title td {
+            padding-top: 40px;
+            padding-bottom: 15px;
+        }
+
+        .llar_weekly_digest_body__desc {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .llar_weekly_digest_body__desc .description {
+            position: relative;
+            font-size: 14px;
+            color: #666D84;
+            background-color: #FFFFFF;
+            border-radius: 50px;
+            width: 290px;
+            padding-top: 12px;
+            padding-bottom: 12px;
+        }
+
+        .llar_weekly_digest_body__desc .llar_icon_calendar {
+            width: 15px;
+            vertical-align: middle;
+        }
+
+        .llar_weekly_digest_body__desc .site-name {
+            position: relative;
+            width: fit-content;
+            font-size: 14px;
+            color: #FF7C06;
+            border-radius: 30px;
+            border: 0.6px solid #FF7C06;
+            background: rgb(255, 241, 234);
+            margin-bottom: -10px;
+            padding: 2px 21px;
+            z-index: 1;
+        }
+
+        .llar_weekly_digest_body__columns td {
+            padding-top: 20px;
+        }
+
+        .llar_weekly_digest_body__columns .column_first,
+        .llar_weekly_digest_body__columns .column_second {
+            width: 185px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            padding: 20px 20px;
+        }
+
+        .llar_weekly_digest_body__columns .column_first {
+            margin-left: 35px;
+        }
+
+        .llar_weekly_digest_body__columns .column_second {
+            margin-right: 35px;
+        }
+
+        .llar_weekly_digest_body__columns .llar_icon_column {
+            width: 46px;
+        }
+
+        .llar_weekly_digest_body__inner_column td {
+            padding-top: 2px;
+        }
+
+        .llar_weekly_digest_body__inner_column .desc {
+            width: 80%;
+        }
+
+        .llar_weekly_digest_body__content {
+            color: #666D84;
+            font-size: 14px;
+            font-weight: 400;
+        }
+
+        .llar_weekly_digest_body__content td {
+            padding: 15px 60px;
+        }
+
+        tfoot .illustration {
+
+        }
+
+        tfoot .illustration img {
+            width: 242px;
+        }
+
+        /*a {*/
+        /*    text-decoration: none;*/
+        /*}*/
     </style>
 </head>
 <section class="llar_weekly_digest">
 <div class="llar_weekly_digest">
-    <table class="llar_weekly_digest_header" width="100%" cellspacing="0" cellpadding="0">
-        <tr>
-            <td valign="top">
-                <img src="<?php echo LLA_PLUGIN_URL . 'assets/img/logo.png' ?>">
-            </td>
-        </tr>
-        <tr>
-            <td valign="top" style="padding:0; margin:0">
-                <table class="es-content" cellspacing="0" cellpadding="0" align="center"
-                       style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;table-layout:fixed !important;width:100%">
-                    <tr>
-                        <td align="center" style="padding:0;Margin:0">
-                            <table class="es-content-body" cellspacing="0" cellpadding="0" bgcolor="#ffffff"
-                                   align="center"
-                                   style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;background-color:#FFFFFF;width:600px">
-                                <tr>
-                                    <td align="left"
-                                        style="padding:0;Margin:0;padding-top:20px;padding-left:20px;padding-right:20px">
-                                        <table width="100%" cellspacing="0" cellpadding="0"
-                                               style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
-                                            <tr>
-                                                <td valign="top" align="center" style="padding:0;Margin:0;width:560px">
-                                                    <table width="100%" cellspacing="0" cellpadding="0"
-                                                           role="presentation"
-                                                           style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
-                                                        <tr>
-                                                            <td style="padding:0;Margin:0">
-                                                                <p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#333333;font-size:14px"><?php ( !empty( $admin_name ) )
-                                                                        ? _e( 'Hello {name},', 'limit-login-attempts-reloaded' )
-                                                                        : _e( 'Hello,', 'limit-login-attempts-reloaded' ); ?></p><br>
-                                                                <p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#333333;font-size:14px">
-                                                                    <?php _e( 'This notification was sent automatically via Limit Login Attempts Reloaded Plugin.', 'limit-login-attempts-reloaded' ); ?></p>
-                                                                <p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#333333;font-size:14px">
-                                                                    <?php _e( 'This is installed on your <b>{domain}</b> WordPress site.', 'limit-login-attempts-reloaded' ); ?></p><br>
-                                                                <p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#333333;font-size:14px">
-                                                                    <?php _e( 'The failed login details include:', 'limit-login-attempts-reloaded' ); ?></p>
-                                                                <ul>
-                                                                    <li style="-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;Margin-bottom:15px;margin-left:0;color:#333333;font-size:14px">
-                                                                        <?php _e( '{attempts_count} failed login attempts ({lockouts_count} lockout(s)) from IP <b>{ip_address}</b>', 'limit-login-attempts-reloaded' ); ?>
-                                                                    </li>
-                                                                    <li style="-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;Margin-bottom:15px;margin-left:0;color:#333333;font-size:14px">
-                                                                        <?php _e( 'Last user attempted: <b>{username}</b>', 'limit-login-attempts-reloaded' ); ?></li>
-                                                                    <li style="-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;Margin-bottom:15px;margin-left:0;color:#333333;font-size:14px">
-                                                                        <?php _e( 'IP was blocked for {blocked_duration}', 'limit-login-attempts-reloaded' ); ?>
-                                                                    </li>
-                                                                </ul>
-                                                                <p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#333333;font-size:14px">
-                                                                    <?php _e( 'Please visit your WordPress dashboard for additional details, investigation options, and help articles.', 'limit-login-attempts-reloaded' ); ?></p></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td align="center" style="padding:20px;Margin:0">
-                                                                <!--[if mso]><a href="{dashboard_url}" target="_blank"
-                                                                                hidden>
-                                                                    <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml"
-                                                                                 xmlns:w="urn:schemas-microsoft-com:office:word"
-                                                                                 esdevVmlButton href="{dashboard_url}"
-                                                                                 style="height:40px; v-text-anchor:middle; width:180px"
-                                                                                 arcsize="50%" strokecolor="#3da7b1"
-                                                                                 strokeweight="1px" fillcolor="#50c1cd">
-                                                                        <w:anchorlock></w:anchorlock>
-                                                                        <center style='color:#ffffff; font-family:arial, "helvetica neue", helvetica, sans-serif; font-size:14px; font-weight:400; line-height:14px;  mso-text-raise:1px'>
-                                                                            <?php _e( 'Go to Dashboard', 'limit-login-attempts-reloaded' ); ?>
-                                                                        </center>
-                                                                    </v:roundrect>
-                                                                </a>
-                                                                <![endif]-->
-                                                                <!--[if !mso]><span
-                                                                        class="msohide es-button-border-2 es-button-border"
-                                                                        style="border-style:solid;border-color:#50c1cd #50c1cd #3da7b1;background:#50c1cd;border-width:0px 0px 2px 0px;display:inline-block;border-radius:30px;width:auto;mso-border-alt:10px;mso-hide:all"><a
-                                                                            href="{dashboard_url}"
-                                                                            class="es-button es-button-1"
-                                                                            target="_blank"
-                                                                            style="mso-style-priority:100 !important;text-decoration:none;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;color:#FFFFFF;font-size:18px;display:inline-block;background:#50c1cd;border-radius:30px;font-family:arial, 'helvetica neue', helvetica, sans-serif;font-weight:normal;font-style:normal;line-height:22px;width:auto;text-align:center;padding:10px 20px 10px 20px;border-color:#50c1cd">Go to Dashboard</a></span>
-                                                                <!--<![endif]--></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td style="padding:0;Margin:0"><p
-                                                                        style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#333333;font-size:14px">
-                                                                    <?php _e( 'Experiencing frequent attacks or degraded performance? Consider ', 'limit-login-attempts-reloaded' ); ?><a href="{premium_url}"
-                                                                                             target="_blank"
-                                                                                             style="-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;text-decoration:underline;color:#FDA33B;font-size:14px"><?php
-                                                                        _e( 'upgrading for advanced protection', 'limit-login-attempts-reloaded' ); ?></a>.</p></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td height="25" align="center"
-                                                                style="padding:0;Margin:0"></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td style="padding:0;Margin:0"><h3
-                                                                        style="Margin:0;line-height:24px;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;font-size:20px;font-style:normal;font-weight:normal;color:#333333">
-                                                                    <?php _e( 'Frequently Asked Questions', 'limit-login-attempts-reloaded' ); ?></h3><br>
-                                                                <p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#333333;font-size:14px">
-                                                                    <b><?php _e( 'What is a failed login attempt?', 'limit-login-attempts-reloaded' ); ?></b><br>
-                                                                    <?php _e( 'A failed login attempt is when an IP address uses incorrect credentials to log into your website. The IP address could be a human operator, or a program designed to guess your password.', 'limit-login-attempts-reloaded' ); ?></p><br>
-                                                                <p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#333333;font-size:14px">
-                                                                    <b><?php _e( 'Why am I getting these emails?', 'limit-login-attempts-reloaded' ); ?></b><br>
-                                                                    <?php _e( 'You are receiving this email because there was a failed login attempt on your website {domain}. If you\'d like to opt out of these notifications, please click the “Unsubscribe” link below.', 'limit-login-attempts-reloaded' ); ?></p><br>
-                                                                <p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#333333;font-size:14px">
-                                                                    <b><?php _e( 'How dangerous is this failed login attempt?', 'limit-login-attempts-reloaded' ); ?></b><br>
-                                                                    <?php _e( 'Unfortunately, we cannot determine the severity of the IP address with the free version of the plugin. If the IP continues to make attempts and is not recognized by your organization, then it\'s likely to have malicious intent. Depending on how frequent the attacks are, you may experience performance issues. In the plugin dashboard, you can investigate the frequency of the failed login attempts in the logs and take additional steps to protect your website (i.e. adding them to the block list). You can visit the ', 'limit-login-attempts-reloaded' ); ?><a
-                                                                            href="{llar_url}" target="_blank"
-                                                                            style="-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;text-decoration:underline;color:#FDA33B;font-size:14px">
-                                                                        <?php _e( 'Limit Login Attempts Reloaded website', 'limit-login-attempts-reloaded' ); ?></a><?php _e( ' for more information on our premium services, which can automatically block and detect malicious IP addresses.', 'limit-login-attempts-reloaded' ); ?></p></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td height="25" align="center"
-                                                                style="padding:0;Margin:0"></td>
-                                                        </tr>
-<!--                                                        --><?php //if( Helpers::is_mu() ) : ?>
-	                                                    <?php if( true ) : ?>
-                                                        <tr>
-                                                            <td style="padding:0;Margin:0"><p
-                                                                        style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#333333;font-size:14px">
-                                                                    <i><?php _e( 'This alert was sent by your website where Limit Login Attempts Reloaded free version is installed and you are listed as the admin. If you are a GoDaddy customer, the plugin is installed into a must-use (MU) folder.', 'limit-login-attempts-reloaded' ); ?></i></p>
-                                                            </td>
-                                                        </tr>
-                                                        <?php endif; ?>
-                                                        <tr>
-                                                            <td style="padding:0;Margin:0;padding-top:20px;padding-bottom:20px;font-size:0"
-                                                                align="center">
-                                                                <table width="100%" height="100%" cellspacing="0"
-                                                                       cellpadding="0" border="0" role="presentation"
-                                                                       style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
-                                                                    <tr>
-                                                                        <td style="padding:0;Margin:0;border-bottom:1px solid #cccccc;background:unset;height:1px;width:100%;margin:0px"></td>
-                                                                    </tr>
-                                                                </table>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td style="padding:0;Margin:0"><p
-                                                                        style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#333333;font-size:14px">
-                                                                    <a href="{unsubscribe_url}" target="_blank"
-                                                                       style="-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;text-decoration:underline;color:#FDA33B;font-size:14px"><?php _e( 'Unsubscribe', 'limit-login-attempts-reloaded' ); ?></a>
-                                                                    <?php _e( 'from these notifications.', 'limit-login-attempts-reloaded' ); ?></p></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td height="15" align="center"
-                                                                style="padding:0;Margin:0"></td>
-                                                        </tr>
-                                                    </table>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td height="25" align="center"
-                            style="padding:0;Margin:0"></td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
+    <table class="llar_weekly_digest_table" width="100%" cellspacing="0" cellpadding="0">
+        <thead class="llar_weekly_digest_header">
+            <tr>
+                <td valign="top" colspan="4" align="center">
+                    <div class="llar_weekly_digest_logo">
+                        <img src="<?php echo LLA_PLUGIN_URL . 'assets/img/logo.png' ?>" alt="">
+                    </div>
+                </td>
+            </tr>
+        </thead>
+        <tbody class="llar_weekly_digest_body">
+            <tr class="llar_weekly_digest_body__title">
+                <td valign="top" colspan="4" align="center">
+	                <?php _e( 'Your Login Security Report', 'limit-login-attempts-reloaded' ); ?>
+                </td>
+            </tr>
+            <tr class="llar_weekly_digest_body__desc">
+                <td valign="top" colspan="4" align="center">
+                    <div class="site-name">
+	                    <?php _e( $domain['host'], 'limit-login-attempts-reloaded' ); ?>
+                    </div>
+                    <div class="description">
+                        <div>
+	                        <?php _e( 'Let’s see how you did last week', 'limit-login-attempts-reloaded' ); ?>
+                        </div>
+                        <div>
+	                        <?php _e( 'from', 'limit-login-attempts-reloaded' ); ?>
+                            <img class="llar_icon_calendar" src="<?php echo LLA_PLUGIN_URL . 'assets/css/images/calendar-min.png' ?>" alt="">
+	                        <?php _e( 'Aug 20 - Aug 26', 'limit-login-attempts-reloaded' ); ?>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr class="llar_weekly_digest_body__columns">
+                <td colspan="2" align="center">
+                    <div class="column_first">
+                        <table class="llar_weekly_digest_body__inner_column">
+                            <tbody>
+                            <tr>
+                                <td valign="top" rowspan="3">
+                                    <img class="llar_icon_column" src="<?php echo LLA_PLUGIN_URL . 'assets/css/images/deny-list-min.png' ?>" alt="">
+                                </td>
+                                <td>
+                                    10.4K
+                                </td>
+                                <td>
+                                    image
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="desc">
+                                    Failed login attempts
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    View logs
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </td>
+                <td colspan="2" align="center">
+                    <div class="column_second">
+                        <table class="llar_weekly_digest_body__inner_column">
+                            <tbody>
+                            <tr>
+                                <td valign="top" rowspan="3" class="image">
+                                    <img class="llar_icon_column" src="<?php echo LLA_PLUGIN_URL . 'assets/css/images/shield-min.png' ?>" alt="">
+                                </td>
+                                <td>
+                                    595
+                                </td>
+                                <td>
+                                    image
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="desc">
+                                    Lockouts
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    Manage IPs
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </td>
+            </tr>
+            <tr class="llar_weekly_digest_body__content">
+                <td colspan="4" align="center">
+                    <div>
+	                    <?php echo sprintf(
+		                    __( 'To view this data, you\'ll need to <a href="%s" target="_blank">upgrade to our premium app.</a>', 'limit-login-attempts-reloaded' ),
+		                    'https://www.limitloginattempts.com/upgrade/' ); ?>
+                    </div>
+                    <div>
+	                    <?php echo sprintf(
+		                    __( 'Not ready for premium? Try our <a href="%s" target="_blank">Micro Cloud</a> service complete free for limited monthly access to our premium features and protection.', 'limit-login-attempts-reloaded' ),
+		                    'https://www.limitloginattempts.com/upgrade/' ); ?>
+                    </div>
+                </td>
+            </tr>
+            <tr class="llar_weekly_digest_body__button">
+                <td colspan="4" align="center">
+                    <div>
+                        button
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td class="illustration" colspan="4" align="center">
+                    <img src="<?php echo LLA_PLUGIN_URL . 'assets/css/images/illustration-min.png' ?>" alt="">
+                </td>
+            </tr>
+        </tfoot>
     </table>
 </div>
 </section>
