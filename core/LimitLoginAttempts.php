@@ -615,10 +615,32 @@ class LimitLoginAttempts {
 		return $submenu_items;
 	}
 
+
+	// delete after setting up the letter
+	public function my_plugin_view_email_page() {
+		echo require_once LLA_PLUGIN_DIR . '/views/emails/security-report.php';
+	}
+	// delete after setting up the letter
+
+
+
 	public function admin_menu() {
 		global $submenu;
 
 		if( Config::get( 'show_top_level_menu_item' ) ) {
+
+
+			// delete after setting up the letter
+            add_menu_page(
+                    'View Email',
+                    'View Email',
+                    'manage_options',
+                    'view-email',
+	            array( $this, 'my_plugin_view_email_page' )
+            );
+			// delete after setting up the letter
+
+
 
 			add_menu_page(
                 'Limit Login Attempts',
@@ -1445,8 +1467,8 @@ class LimitLoginAttempts {
 
 			foreach( $retries_stats as $key => $count ) {
 
-				if( ( is_numeric( $key ) && $key < strtotime( '-8 day' ) ) ||
-                    ( !is_numeric( $key ) && strtotime( $key ) < strtotime( '-8 day' ) ) ) {
+				if( ( is_numeric( $key ) && $key < strtotime( '-14 day' ) ) ||
+                    ( !is_numeric( $key ) && strtotime( $key ) < strtotime( '-14 day' ) ) ) {
 					unset($retries_stats[$key]);
 				}
 			}

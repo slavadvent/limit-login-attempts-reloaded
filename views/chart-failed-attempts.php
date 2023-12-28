@@ -75,6 +75,15 @@ if( $is_active_app_custom ) {
 
 	$retries_stats = Config::get( 'retries_stats' );
 
+
+	// we will limit the number of days
+	$eight_days_ago = strtotime('-8 days');
+
+	$retries_stats = array_filter( $retries_stats, static function( $timestamp ) use ( $eight_days_ago ) {
+		return $timestamp >= $eight_days_ago;
+	}, ARRAY_FILTER_USE_KEY );
+
+
 	if( is_array( $retries_stats ) && $retries_stats ) {
 		$key = key( $retries_stats );
 		$start = is_numeric( $key ) ? date_i18n( 'Y-m-d', $key ) : $key;
@@ -100,7 +109,9 @@ if( $is_active_app_custom ) {
 		$chart2_data = array();
 		foreach ( $daterange as $date ) {
 			$chart2_labels[] = $date->format( $date_format );
-			$chart2_data[] = ( !empty($retries_per_day[ $date->format("Y-m-d")] ) ) ? $retries_per_day[ $date->format("Y-m-d") ] : 0;
+			$chart2_data[] = ! empty( $retries_per_day[ $date->format("Y-m-d")] )
+                ? $retries_per_day[ $date->format("Y-m-d") ]
+                : 0;
 		}
 	} else {
 
