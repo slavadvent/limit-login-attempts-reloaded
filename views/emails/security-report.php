@@ -59,8 +59,7 @@ $link = $domain['scheme'] . '://' . $domain['host'];
         table.llar_weekly_digest_table {
             background-color: #ffffff;
             border-radius: 20px;
-            padding-left: 30px;
-            padding-right: 30px;
+            padding: 0 30px 30px;
         }
 
         .llar_weekly_digest_header td {
@@ -79,11 +78,11 @@ $link = $domain['scheme'] . '://' . $domain['host'];
         tbody.llar_weekly_digest_body {
             position: relative;
             background-image: url("<?php echo LLA_PLUGIN_URL . 'assets/css/images/security-report-bg.jpg' ?>");
-            background-size: cover;
+            background-size: 100% 100%;
             border-radius: 20px;
         }
 
-        .llar_weekly_digest_body__title {
+        .llar_weekly_digest_body__title, .llar_weekly_digest__title {
             font-size: 24px;
             font-weight: 500;
             color: #2A2F40;
@@ -153,7 +152,40 @@ $link = $domain['scheme'] . '://' . $domain['host'];
         }
 
         .llar_weekly_digest_body__inner_column td {
-            padding-top: 2px;
+            padding-top: 0;
+        }
+
+        .llar_weekly_digest_body__inner_column .llar_digit {
+            font-size: 16px;
+            font-weight: 500;
+            color: #2A2F40;
+            width: 30px;
+        }
+
+        .llar_weekly_digest_body__inner_column .llar_arrow {
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+        .llar_weekly_digest_body__inner_column .llar_arrow .llar_arrow_left {
+            width: 50px;
+            padding: 0 10px;
+            background-color: rgba(236, 70, 82, 0.06);
+            border-radius: 20px;
+        }
+
+        .llar_weekly_digest_body__inner_column .llar_arrow img {
+            width: 15px;
+        }
+
+        .llar_weekly_digest_body__inner_column .llar_desc {
+            color: #666D84;
+            width: 100%;
+        }
+
+        .llar_weekly_digest_body__inner_column .llar_link {
+            padding-top: 5px;
+            color: #4ACAD8;
         }
 
         .llar_weekly_digest_body__inner_column .desc {
@@ -170,17 +202,96 @@ $link = $domain['scheme'] . '://' . $domain['host'];
             padding: 15px 60px;
         }
 
-        tfoot .illustration {
+        .llar_weekly_digest_body__content td div {
+            padding-top: 5px;
+        }
 
+        .llar_weekly_digest_body__button .llar_button {
+            width: 220px;
+            background: #FF7C06;
+            border-radius: 10px;
+            box-shadow: 0 5px 10px 0 rgba(255, 124, 6, 0.50);
+            margin: 18px auto 40px;
+        }
+
+        .llar_weekly_digest_body__button .llar_button_link {
+            display: block;
+            font-size: 16px;
+            color: #ffffff;
+            padding: 5px 35px;
+            text-decoration: none;
+        }
+
+        tfoot .illustration {
+            padding-top: 45px;
         }
 
         tfoot .illustration img {
             width: 242px;
         }
 
-        /*a {*/
-        /*    text-decoration: none;*/
-        /*}*/
+        .llar_weekly_digest__title td {
+            padding-top: 20px;
+        }
+
+        .llar_weekly_digest__desc {
+            font-size: 18px;
+            color: #666D84;
+        }
+
+        .llar_weekly_digest__desc td {
+            padding: 10px 65px;
+        }
+
+        tfoot .llar_weekly_digest_body__content {
+            width: 100%;
+            font-size: 12px;
+            color: #666D84;
+        }
+
+        tfoot .llar_weekly_digest_body__content td {
+            padding: 27px 0 0;
+        }
+
+        table.llar_additional {
+            background-color: #F6FBFF;
+            border-radius: 20px;
+        }
+
+        table.llar_additional td {
+            width: 100%;
+            padding: 27px 40px 0;
+        }
+
+        table.llar_additional  .llar__content_line td {
+            padding: 10px 40px;
+        }
+
+        table.llar_additional  .llar__content_line hr {
+            border-color: rgba(164, 168, 183, 0.3);
+        }
+
+        table.llar_additional .llar__content_copyright td {
+            padding: 5px 40px;
+        }
+
+        table.llar_additional .llar__content_copyright .copyright {
+            width: 230px;
+            border: 1px solid #4ACAD8;
+            border-radius: 20px;
+            background-color: #ffffff;
+            padding: 1px 20px 5px;
+        }
+
+        table.llar_additional .llar__content_address td {
+            color: #A4A8B7;
+            font-size: 12px;
+            padding: 0 20px 25px;
+        }
+
+        strong {
+            font-weight: 500;
+        }
     </style>
 </head>
 <section class="llar_weekly_digest">
@@ -227,20 +338,23 @@ $link = $domain['scheme'] . '://' . $domain['host'];
                                 <td valign="top" rowspan="3">
                                     <img class="llar_icon_column" src="<?php echo LLA_PLUGIN_URL . 'assets/css/images/deny-list-min.png' ?>" alt="">
                                 </td>
-                                <td>
+                                <td align="left" class="llar_digit">
                                     10.4K
                                 </td>
-                                <td>
-                                    image
+                                <td align="left" class="llar_arrow">
+                                    <div class="llar_arrow_left">
+                                        <img src="<?php echo LLA_PLUGIN_URL . 'assets/css/images/red-arrow-min.png' ?>" alt="">
+                                        5.1k
+                                    </div>
                                 </td>
                             </tr>
                             <tr>
-                                <td colspan="2" class="desc">
+                                <td colspan="2" class="llar_desc">
                                     Failed login attempts
                                 </td>
                             </tr>
                             <tr>
-                                <td colspan="2">
+                                <td colspan="2" class="llar_link">
                                     View logs
                                 </td>
                             </tr>
@@ -256,20 +370,23 @@ $link = $domain['scheme'] . '://' . $domain['host'];
                                 <td valign="top" rowspan="3" class="image">
                                     <img class="llar_icon_column" src="<?php echo LLA_PLUGIN_URL . 'assets/css/images/shield-min.png' ?>" alt="">
                                 </td>
-                                <td>
+                                <td class="llar_digit">
                                     595
                                 </td>
-                                <td>
-                                    image
+                                <td class="llar_arrow">
+                                    <div class="llar_arrow_left">
+                                        <img src="<?php echo LLA_PLUGIN_URL . 'assets/css/images/green-arrow-min.png' ?>" alt="">
+                                        100
+                                    </div>
                                 </td>
                             </tr>
                             <tr>
-                                <td colspan="2" class="desc">
+                                <td colspan="2" class="llar_desc">
                                     Lockouts
                                 </td>
                             </tr>
                             <tr>
-                                <td colspan="2">
+                                <td colspan="2" class="llar_link">
                                     Manage IPs
                                 </td>
                             </tr>
@@ -294,8 +411,10 @@ $link = $domain['scheme'] . '://' . $domain['host'];
             </tr>
             <tr class="llar_weekly_digest_body__button">
                 <td colspan="4" align="center">
-                    <div>
-                        button
+                    <div class="llar_button">
+                        <a href="{dashboard_url}" class="llar_button_link " target="_blank">
+	                        <?php _e( 'Go To Dashboard', 'limit-login-attempts-reloaded' ); ?>
+                        </a>
                     </div>
                 </td>
             </tr>
@@ -306,6 +425,65 @@ $link = $domain['scheme'] . '://' . $domain['host'];
                     <img src="<?php echo LLA_PLUGIN_URL . 'assets/css/images/illustration-min.png' ?>" alt="">
                 </td>
             </tr>
+            <tr class="llar_weekly_digest__title">
+                <td colspan="4" align="center">
+	                <?php _e( 'Unlock our powerful Login Firewall and IP Intelligence when upgrading to premium!', 'limit-login-attempts-reloaded' ); ?>
+                </td>
+            </tr>
+            <tr class="llar_weekly_digest__desc">
+                <td colspan="4" align="center">
+		            <?php _e( 'Subscribe today and take your login protection to the next level.', 'limit-login-attempts-reloaded' ); ?>
+                </td>
+            </tr>
+            <tr class="llar_weekly_digest_body__button">
+                <td colspan="4" align="center">
+                    <div class="llar_button">
+                        <a href="{dashboard_url}" class="llar_button_link " target="_blank">
+	                        <?php _e( 'View Plans & Pricing', 'limit-login-attempts-reloaded' ); ?>
+                        </a>
+                    </div>
+                </td>
+            </tr>
+            <tr class="llar_weekly_digest_body__content">
+                <td colspan="4" align="center">
+                    <table class="llar_additional">
+                        <tbody>
+                            <tr>
+                                <td align="center">
+	                                <?php echo sprintf(
+		                                __( 'This message was sent to <strong>greg@tripshock.com, </strong>which is designed as the admin email for the Limit Login Attempts Reloaded Plugin on www.domain.com. If you no longer wish to receive these emails, please go to yours <a href="%s" target="_blank">settings whithin the plugin dashboard</a> to disabled these notifications.', 'limit-login-attempts-reloaded' ),
+		                                'https://www.limitloginattempts.com/upgrade/' ); ?>
+                                </td>
+                            </tr>
+                            <tr class="llar__content_line">
+                                <td align="center">
+                                    <hr>
+                                </td>
+                            </tr>
+                            <tr class="llar__content_copyright">
+                                <td align="center">
+                                    <div class="copyright">
+	                                    <?php _e( '© 2023 Limit Login Attempts Reloaded', 'limit-login-attempts-reloaded' ); ?>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="llar__content_address">
+                                <td align="center">
+		                            <?php _e( '3999 Commons Dr. W Unit N Destin, Fl 32541, USA</br>www. limitloginattempts.com', 'limit-login-attempts-reloaded' ); ?>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </td>
+            </tr>
+<!--            <tr class="llar_weekly_digest_body__line">-->
+<!--                <td colspan="4" align="center">-->
+<!--		            --><?php //echo sprintf(
+//			            __( 'This message was sent to <strong>greg@tripshock.com, </strong>which is designed as the admin email for the Limit Login Attempts Reloaded Plugin on www.domain.com. If you no longer wish to receive these emails, please go to yours <a href="%s" target="_blank">settings whithin the plugin dashboard</a> to disabled these notifications.', 'limit-login-attempts-reloaded' ),
+//			            'https://www.limitloginattempts.com/upgrade/' ); ?>
+<!--                </td>-->
+<!--            </tr>-->
         </tfoot>
     </table>
 </div>
