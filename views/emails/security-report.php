@@ -188,6 +188,11 @@ $link = $domain['scheme'] . '://' . $domain['host'];
             color: #4ACAD8;
         }
 
+        .llar_weekly_digest_body__inner_column .llar_link img {
+            width: 15px;
+            vertical-align: middle;
+        }
+
         .llar_weekly_digest_body__inner_column .desc {
             width: 80%;
         }
@@ -356,6 +361,7 @@ $link = $domain['scheme'] . '://' . $domain['host'];
                             <tr>
                                 <td colspan="2" class="llar_link">
                                     View logs
+                                    <img src="<?php echo LLA_PLUGIN_URL . 'assets/css/images/arrow-min.png' ?>" alt="">
                                 </td>
                             </tr>
                             </tbody>
@@ -388,6 +394,7 @@ $link = $domain['scheme'] . '://' . $domain['host'];
                             <tr>
                                 <td colspan="2" class="llar_link">
                                     Manage IPs
+                                    <img src="<?php echo LLA_PLUGIN_URL . 'assets/css/images/arrow-min.png' ?>" alt="">
                                 </td>
                             </tr>
                             </tbody>
