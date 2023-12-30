@@ -351,216 +351,208 @@ $green_arrow = '<img src="' . LLA_PLUGIN_URL . 'assets/css/images/green-arrow-mi
         }
     </style>
 </head>
-<section class="llar_weekly_digest">
-<div class="llar_weekly_digest">
-    <table class="llar_weekly_digest_table" width="100%" cellspacing="0" cellpadding="0">
-        <thead class="llar_weekly_digest_header">
-            <tr>
-                <td valign="top" colspan="4" align="center">
-                    <div class="llar_weekly_digest_logo">
-                        <img src="<?php echo LLA_PLUGIN_URL . 'assets/img/logo.png' ?>" alt="">
-                    </div>
-                </td>
-            </tr>
-        </thead>
-        <tbody class="llar_weekly_digest_body">
-            <tr class="llar_weekly_digest_body__title">
-                <td valign="top" colspan="4" align="center">
-	                <?php _e( 'Your Login Security Report', 'limit-login-attempts-reloaded' ); ?>
-                </td>
-            </tr>
-            <tr class="llar_weekly_digest_body__desc">
-                <td valign="top" colspan="4" align="center">
-                    <div class="site-name">
-	                    <?php _e( $domain['host'], 'limit-login-attempts-reloaded' ); ?>
-                    </div>
-                    <div class="description">
+<body class="llar_weekly_digest">
+    <div class="llar_weekly_digest">
+        <table class="llar_weekly_digest_table" width="100%" cellspacing="0" cellpadding="0">
+            <thead class="llar_weekly_digest_header">
+                <tr>
+                    <td valign="top" colspan="4" align="center">
+                        <div class="llar_weekly_digest_logo">
+                            <img src="<?php echo LLA_PLUGIN_URL . 'assets/img/logo.png' ?>" alt="">
+                        </div>
+                    </td>
+                </tr>
+            </thead>
+            <tbody class="llar_weekly_digest_body">
+                <tr class="llar_weekly_digest_body__title">
+                    <td valign="top" colspan="4" align="center">
+                        <?php _e( 'Your Login Security Report', 'limit-login-attempts-reloaded' ); ?>
+                    </td>
+                </tr>
+                <tr class="llar_weekly_digest_body__desc">
+                    <td valign="top" colspan="4" align="center">
+                        <div class="site-name">
+                            <?php _e( $domain['host'], 'limit-login-attempts-reloaded' ); ?>
+                        </div>
+                        <div class="description">
+                            <div>
+                                <?php _e( 'Let’s see how you did last week', 'limit-login-attempts-reloaded' ); ?>
+                            </div>
+                            <div>
+                                <?php _e( 'from', 'limit-login-attempts-reloaded' ); ?>
+                                <img class="llar_icon_calendar" src="<?php echo LLA_PLUGIN_URL . 'assets/css/images/calendar-min.png' ?>" alt="">
+                                <?php echo date_i18n( $date_format, $start_period ) . '-' . date_i18n( $date_format, $end_period ); ?>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr class="llar_weekly_digest_body__columns">
+                    <td colspan="2" align="center">
+                        <div class="column_first">
+                            <table class="llar_weekly_digest_body__inner_column">
+                                <tbody>
+                                <tr>
+                                    <td valign="top" rowspan="3">
+                                        <img class="llar_icon_column" src="<?php echo LLA_PLUGIN_URL . 'assets/css/images/deny-list-min.png' ?>" alt="">
+                                    </td>
+                                    <td align="left" class="llar_digit">
+                                        <?php echo Helpers::format_number_short($count_attempts) ?>
+                                    </td>
+                                    <td align="left" class="llar_arrow">
+                                        <div class="llar_arrow_left">
+                                            <?php
+                                                echo ( $count_attempts < $count_last_attempts )
+                                                    ? $red_arrow
+                                                    : ( ( $count_attempts === $count_last_attempts )
+                                                        ? '='
+                                                        : $green_arrow );
+                                                echo Helpers::format_number_short( $count_last_attempts )
+                                            ?>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" class="llar_desc">
+                                        <?php _e( 'Failed login attempts', 'limit-login-attempts-reloaded' ); ?>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" class="llar_link">
+                                        <a href="<?php echo $site_link . '/wp-admin/admin.php?page=limit-login-attempts&tab=logs-local' ?>" target="_blank">
+                                            <?php _e( 'View logs', 'limit-login-attempts-reloaded' ); ?>
+                                            <img src="<?php echo LLA_PLUGIN_URL . 'assets/css/images/arrow-min.png' ?>" alt="">
+                                        </a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </td>
+                    <td colspan="2" align="center">
+                        <div class="column_second">
+                            <table class="llar_weekly_digest_body__inner_column">
+                                <tbody>
+                                <tr>
+                                    <td valign="top" rowspan="3" class="image">
+                                        <img class="llar_icon_column" src="<?php echo LLA_PLUGIN_URL . 'assets/css/images/shield-min.png' ?>" alt="">
+                                    </td>
+                                    <td class="llar_digit">
+                                        <?php echo Helpers::format_number_short($count_lockout) ?>
+                                    </td>
+                                    <td class="llar_arrow">
+                                        <div class="llar_arrow_left">
+                                            <?php
+                                            echo ( $count_lockout < $count_last_lockout )
+                                                    ? $red_arrow
+                                                    : ( ( $count_lockout === $count_last_lockout )
+                                                        ? '='
+                                                        : $green_arrow );
+                                            echo Helpers::format_number_short($count_last_lockout)
+                                            ?>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" class="llar_desc">
+                                        <?php _e( 'Lockouts', 'limit-login-attempts-reloaded' ); ?>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" class="llar_link">
+                                        <a href="<?php echo $site_link . '/wp-admin/admin.php?page=limit-login-attempts&tab=logs-local' ?>" target="_blank">
+                                            <?php _e( 'Manage IPs', 'limit-login-attempts-reloaded' ); ?>
+                                            <img src="<?php echo LLA_PLUGIN_URL . 'assets/css/images/arrow-min.png' ?>" alt="">
+                                        </a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+                <tr class="llar_weekly_digest_body__content">
+                    <td colspan="4" align="center">
                         <div>
-	                        <?php _e( 'Let’s see how you did last week', 'limit-login-attempts-reloaded' ); ?>
+                            <?php echo sprintf(
+                                __( 'To view this data, you\'ll need to <a href="%s" target="_blank">upgrade to our premium app.</a>', 'limit-login-attempts-reloaded' ),
+                                'https://www.limitloginattempts.com/upgrade/' ); ?>
                         </div>
                         <div>
-	                        <?php _e( 'from', 'limit-login-attempts-reloaded' ); ?>
-                            <img class="llar_icon_calendar" src="<?php echo LLA_PLUGIN_URL . 'assets/css/images/calendar-min.png' ?>" alt="">
-	                        <?php echo date_i18n( $date_format, $start_period ) . '-' . date_i18n( $date_format, $end_period ); ?>
+                            <?php echo sprintf(
+                                __( 'Not ready for premium? Try our <a href="%s" target="_blank">Micro Cloud</a> service complete free for limited monthly access to our premium features and protection.', 'limit-login-attempts-reloaded' ),
+                                'https://www.limitloginattempts.com/upgrade/' ); ?>
                         </div>
-                    </div>
-                </td>
-            </tr>
-            <tr class="llar_weekly_digest_body__columns">
-                <td colspan="2" align="center">
-                    <div class="column_first">
-                        <table class="llar_weekly_digest_body__inner_column">
+                    </td>
+                </tr>
+                <tr class="llar_weekly_digest_body__button">
+                    <td colspan="4" align="center">
+                        <div class="llar_button">
+                            <a href="<?php echo $site_link . '/wp-admin/admin.php?page=limit-login-attempts&tab=dashboard' ?>" class="llar_button_link " target="_blank">
+                                <?php _e( 'Go To Dashboard', 'limit-login-attempts-reloaded' ); ?>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td class="illustration" colspan="4" align="center">
+                        <img src="<?php echo LLA_PLUGIN_URL . 'assets/css/images/illustration-min.png' ?>" alt="">
+                    </td>
+                </tr>
+                <tr class="llar_weekly_digest__title">
+                    <td colspan="4" align="center">
+                        <?php _e( 'Unlock our powerful Login Firewall and IP Intelligence when upgrading to premium!', 'limit-login-attempts-reloaded' ); ?>
+                    </td>
+                </tr>
+                <tr class="llar_weekly_digest__desc">
+                    <td colspan="4" align="center">
+                        <?php _e( 'Subscribe today and take your login protection to the next level.', 'limit-login-attempts-reloaded' ); ?>
+                    </td>
+                </tr>
+                <tr class="llar_weekly_digest_body__button">
+                    <td colspan="4" align="center">
+                        <div class="llar_button">
+                            <a href="<?php echo $site_link . '/wp-admin/admin.php?page=limit-login-attempts&tab=premium' ?>" class="llar_button_link " target="_blank">
+                                <?php _e( 'View Plans & Pricing', 'limit-login-attempts-reloaded' ); ?>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                <tr class="llar_weekly_digest_body__content">
+                    <td colspan="4" align="center">
+                        <table class="llar_additional">
                             <tbody>
-                            <tr>
-                                <td valign="top" rowspan="3">
-                                    <img class="llar_icon_column" src="<?php echo LLA_PLUGIN_URL . 'assets/css/images/deny-list-min.png' ?>" alt="">
-                                </td>
-                                <td align="left" class="llar_digit">
-                                    <?php echo Helpers::format_number_short($count_attempts) ?>
-                                </td>
-                                <td align="left" class="llar_arrow">
-                                    <div class="llar_arrow_left">
-                                        <?php
-                                            echo ( $count_attempts < $count_last_attempts )
-                                                ? $red_arrow
-                                                : ( ( $count_attempts === $count_last_attempts )
-                                                    ? '='
-                                                    : $green_arrow );
-                                            echo Helpers::format_number_short( $count_last_attempts )
-                                        ?>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="2" class="llar_desc">
-	                                <?php _e( 'Failed login attempts', 'limit-login-attempts-reloaded' ); ?>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="2" class="llar_link">
-                                    <a href="<?php echo $site_link . '/wp-admin/admin.php?page=limit-login-attempts&tab=logs-local' ?>" target="_blank">
-	                                    <?php _e( 'View logs', 'limit-login-attempts-reloaded' ); ?>
-                                        <img src="<?php echo LLA_PLUGIN_URL . 'assets/css/images/arrow-min.png' ?>" alt="">
-                                    </a>
-                                </td>
-                            </tr>
+                                <tr>
+                                    <td align="center">
+                                        <?php echo sprintf(
+                                            __( 'This message was sent to <strong>greg@tripshock.com, </strong>which is designed as the admin email for the Limit Login Attempts Reloaded Plugin on www.domain.com. If you no longer wish to receive these emails, please go to yours <a href="%s" target="_blank">settings whithin the plugin dashboard</a> to disabled these notifications.', 'limit-login-attempts-reloaded' ),
+                                            'https://www.limitloginattempts.com/upgrade/' ); ?>
+                                    </td>
+                                </tr>
+                                <tr class="llar__content_line">
+                                    <td align="center">
+                                        <hr>
+                                    </td>
+                                </tr>
+                                <tr class="llar__content_copyright">
+                                    <td align="center">
+                                        <div class="copyright">
+                                            <?php _e( '© 2023 Limit Login Attempts Reloaded', 'limit-login-attempts-reloaded' ); ?>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="llar__content_address">
+                                    <td align="center">
+                                        <?php _e( '3999 Commons Dr. W Unit N Destin, Fl 32541, USA</br>www. limitloginattempts.com', 'limit-login-attempts-reloaded' ); ?>
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
-                    </div>
-                </td>
-                <td colspan="2" align="center">
-                    <div class="column_second">
-                        <table class="llar_weekly_digest_body__inner_column">
-                            <tbody>
-                            <tr>
-                                <td valign="top" rowspan="3" class="image">
-                                    <img class="llar_icon_column" src="<?php echo LLA_PLUGIN_URL . 'assets/css/images/shield-min.png' ?>" alt="">
-                                </td>
-                                <td class="llar_digit">
-	                                <?php echo Helpers::format_number_short($count_lockout) ?>
-                                </td>
-                                <td class="llar_arrow">
-                                    <div class="llar_arrow_left">
-                                        <?php
-                                        echo ( $count_lockout < $count_last_lockout )
-                                                ? $red_arrow
-                                                : ( ( $count_lockout === $count_last_lockout )
-                                                    ? '='
-                                                    : $green_arrow );
-	                                    echo Helpers::format_number_short($count_last_lockout)
-                                        ?>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="2" class="llar_desc">
-	                                <?php _e( 'Lockouts', 'limit-login-attempts-reloaded' ); ?>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="2" class="llar_link">
-                                    <a href="<?php echo $site_link . '/wp-admin/admin.php?page=limit-login-attempts&tab=logs-local' ?>" target="_blank">
-	                                    <?php _e( 'Manage IPs', 'limit-login-attempts-reloaded' ); ?>
-                                        <img src="<?php echo LLA_PLUGIN_URL . 'assets/css/images/arrow-min.png' ?>" alt="">
-                                    </a>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </td>
-            </tr>
-            <tr class="llar_weekly_digest_body__content">
-                <td colspan="4" align="center">
-                    <div>
-	                    <?php echo sprintf(
-		                    __( 'To view this data, you\'ll need to <a href="%s" target="_blank">upgrade to our premium app.</a>', 'limit-login-attempts-reloaded' ),
-		                    'https://www.limitloginattempts.com/upgrade/' ); ?>
-                    </div>
-                    <div>
-	                    <?php echo sprintf(
-		                    __( 'Not ready for premium? Try our <a href="%s" target="_blank">Micro Cloud</a> service complete free for limited monthly access to our premium features and protection.', 'limit-login-attempts-reloaded' ),
-		                    'https://www.limitloginattempts.com/upgrade/' ); ?>
-                    </div>
-                </td>
-            </tr>
-            <tr class="llar_weekly_digest_body__button">
-                <td colspan="4" align="center">
-                    <div class="llar_button">
-                        <a href="<?php echo $site_link . '/wp-admin/admin.php?page=limit-login-attempts&tab=dashboard' ?>" class="llar_button_link " target="_blank">
-	                        <?php _e( 'Go To Dashboard', 'limit-login-attempts-reloaded' ); ?>
-                        </a>
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-        <tfoot>
-            <tr>
-                <td class="illustration" colspan="4" align="center">
-                    <img src="<?php echo LLA_PLUGIN_URL . 'assets/css/images/illustration-min.png' ?>" alt="">
-                </td>
-            </tr>
-            <tr class="llar_weekly_digest__title">
-                <td colspan="4" align="center">
-	                <?php _e( 'Unlock our powerful Login Firewall and IP Intelligence when upgrading to premium!', 'limit-login-attempts-reloaded' ); ?>
-                </td>
-            </tr>
-            <tr class="llar_weekly_digest__desc">
-                <td colspan="4" align="center">
-		            <?php _e( 'Subscribe today and take your login protection to the next level.', 'limit-login-attempts-reloaded' ); ?>
-                </td>
-            </tr>
-            <tr class="llar_weekly_digest_body__button">
-                <td colspan="4" align="center">
-                    <div class="llar_button">
-                        <a href="<?php echo $site_link . '/wp-admin/admin.php?page=limit-login-attempts&tab=premium' ?>" class="llar_button_link " target="_blank">
-	                        <?php _e( 'View Plans & Pricing', 'limit-login-attempts-reloaded' ); ?>
-                        </a>
-                    </div>
-                </td>
-            </tr>
-            <tr class="llar_weekly_digest_body__content">
-                <td colspan="4" align="center">
-                    <table class="llar_additional">
-                        <tbody>
-                            <tr>
-                                <td align="center">
-	                                <?php echo sprintf(
-		                                __( 'This message was sent to <strong>greg@tripshock.com, </strong>which is designed as the admin email for the Limit Login Attempts Reloaded Plugin on www.domain.com. If you no longer wish to receive these emails, please go to yours <a href="%s" target="_blank">settings whithin the plugin dashboard</a> to disabled these notifications.', 'limit-login-attempts-reloaded' ),
-		                                'https://www.limitloginattempts.com/upgrade/' ); ?>
-                                </td>
-                            </tr>
-                            <tr class="llar__content_line">
-                                <td align="center">
-                                    <hr>
-                                </td>
-                            </tr>
-                            <tr class="llar__content_copyright">
-                                <td align="center">
-                                    <div class="copyright">
-	                                    <?php _e( '© 2023 Limit Login Attempts Reloaded', 'limit-login-attempts-reloaded' ); ?>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr class="llar__content_address">
-                                <td align="center">
-		                            <?php _e( '3999 Commons Dr. W Unit N Destin, Fl 32541, USA</br>www. limitloginattempts.com', 'limit-login-attempts-reloaded' ); ?>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-
-                </td>
-            </tr>
-<!--            <tr class="llar_weekly_digest_body__line">-->
-<!--                <td colspan="4" align="center">-->
-<!--		            --><?php //echo sprintf(
-//			            __( 'This message was sent to <strong>greg@tripshock.com, </strong>which is designed as the admin email for the Limit Login Attempts Reloaded Plugin on www.domain.com. If you no longer wish to receive these emails, please go to yours <a href="%s" target="_blank">settings whithin the plugin dashboard</a> to disabled these notifications.', 'limit-login-attempts-reloaded' ),
-//			            'https://www.limitloginattempts.com/upgrade/' ); ?>
-<!--                </td>-->
-<!--            </tr>-->
-        </tfoot>
-    </table>
-</div>
-</section>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</body>
 </html>
