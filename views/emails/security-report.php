@@ -1,11 +1,58 @@
 <?php
+
+use LLAR\Core\Config;
 use LLAR\Core\Helpers;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit();
 }
 $domain = parse_url( home_url( '/' ) );
-$link = $domain['scheme'] . '://' . $domain['host'];
+$site_link = $domain['scheme'] . '://' . $domain['host'];
+$date_format = trim( get_option( 'date_format' ), ' yY,._:;-/\\' );
+$date_format = str_replace( 'F', 'M', $date_format );
+
+// It's all about the transition 24:00:00, which is equal to 00:00:00 the next day
+// We determine the date today and at 00:00:00
+$today = date_i18n( 'Y-m-d 00:00:00', strtotime( 'now' ) );
+// Subtract 1 second and get - yesterday
+$start_period = strtotime( $today ) - 1;
+// A week is minus 7 days and + 1 second
+$end_period = strtotime( '-7 days', $start_period ) + 1;
+$start_last_period = $end_period - 1;
+$end_last_period = strtotime( '-7 days', $start_last_period ) + 1;
+
+$retries_stats = Config::get( 'retries_stats' );
+$log = Config::get( 'logged' );
+$log = Helpers::sorted_log_by_date( $log );
+
+$count_lockout = 0;
+$count_last_lockout = 0;
+if ( is_array( $log ) && ! empty( $log ) ) {
+
+	foreach ( $log as $timestamp => $user_info ) {
+		if ( $timestamp <= $start_period && $timestamp >= $end_period ) {
+			$count_lockout += (int)$user_info['counter'];
+        } elseif ( $timestamp <= $start_last_period && $timestamp >= $end_last_period ) {
+			$count_last_lockout += (int)$user_info['counter'];
+		}
+    }
+}
+
+$count_attempts = 0;
+$count_last_attempts = 0;
+if ( is_array( $retries_stats ) && ! empty( $retries_stats ) ) {
+	foreach ( $retries_stats as $timestamp => $attempts ) {
+		if ( $timestamp <= $start_period && $timestamp >= $end_period ) {
+			$count_attempts += (int)$attempts;
+		}
+        elseif ( $timestamp <= $start_last_period && $timestamp >= $end_last_period ) {
+			$count_last_attempts += (int)$attempts;
+		}
+	}
+}
+
+$red_arrow = '<img src="' . LLA_PLUGIN_URL . 'assets/css/images/red-arrow-min.png" alt="">';
+$green_arrow = '<img src="' . LLA_PLUGIN_URL . 'assets/css/images/green-arrow-min.png" alt="">';
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -20,10 +67,10 @@ $link = $domain['scheme'] . '://' . $domain['host'];
     <style type="text/css">
         @font-face {
             font-family: 'CoFo Sans';
-            src: url(<?php echo $link . '/wp-content/themes/llar/assets/fonts/CoFoSans-Regular.eot' ?>) format('embedded-opentype');
-            src: url(<?php echo $link . '/wp-content/themes/llar/assets/fonts/CoFoSans-Regular.woff' ?>) format('woff');
-            src: url(<?php echo $link . '/wp-content/themes/llar/assets/fonts/CoFoSans-Regular.woff2' ?>) format('woff2');
-            src: url(<?php echo $link . '/wp-content/themes/llar/assets/fonts/CoFoSans-Regular.ttf' ?>) format('truetype');
+            src: url(<?php echo $site_link . '/wp-content/themes/llar/assets/fonts/CoFoSans-Regular.eot' ?>) format('embedded-opentype');
+            src: url(<?php echo $site_link . '/wp-content/themes/llar/assets/fonts/CoFoSans-Regular.woff' ?>) format('woff');
+            src: url(<?php echo $site_link . '/wp-content/themes/llar/assets/fonts/CoFoSans-Regular.woff2' ?>) format('woff2');
+            src: url(<?php echo $site_link . '/wp-content/themes/llar/assets/fonts/CoFoSans-Regular.ttf' ?>) format('truetype');
             font-weight: 400;
             font-style: normal;
             font-display: swap;
@@ -31,10 +78,10 @@ $link = $domain['scheme'] . '://' . $domain['host'];
 
         @font-face {
             font-family: 'CoFo Sans';
-            src: url(<?php echo $link . '/wp-content/themes/llar/assets/fonts/CoFoSans-Medium.eot' ?>) format('embedded-opentype');
-            src: url(<?php echo $link . '/wp-content/themes/llar/assets/fonts/CoFoSans-Medium.woff' ?>) format('woff');
-            src: url(<?php echo $link . '/wp-content/themes/llar/assets/fonts/CoFoSans-Medium.woff2' ?>) format('woff2');
-            src: url(<?php echo $link . '/wp-content/themes/llar/assets/fonts/CoFoSans-Medium.ttf' ?>) format('truetype');
+            src: url(<?php echo $site_link . '/wp-content/themes/llar/assets/fonts/CoFoSans-Medium.eot' ?>) format('embedded-opentype');
+            src: url(<?php echo $site_link . '/wp-content/themes/llar/assets/fonts/CoFoSans-Medium.woff' ?>) format('woff');
+            src: url(<?php echo $site_link . '/wp-content/themes/llar/assets/fonts/CoFoSans-Medium.woff2' ?>) format('woff2');
+            src: url(<?php echo $site_link . '/wp-content/themes/llar/assets/fonts/CoFoSans-Medium.ttf' ?>) format('truetype');
             font-weight: 500;
             font-style: normal;
             font-display: swap;
@@ -168,7 +215,7 @@ $link = $domain['scheme'] . '://' . $domain['host'];
         }
 
         .llar_weekly_digest_body__inner_column .llar_arrow .llar_arrow_left {
-            width: 50px;
+            width: fit-content;
             padding: 0 10px;
             background-color: rgba(236, 70, 82, 0.06);
             border-radius: 20px;
@@ -176,6 +223,7 @@ $link = $domain['scheme'] . '://' . $domain['host'];
 
         .llar_weekly_digest_body__inner_column .llar_arrow img {
             width: 15px;
+            margin-right: 5px;
         }
 
         .llar_weekly_digest_body__inner_column .llar_desc {
@@ -185,7 +233,11 @@ $link = $domain['scheme'] . '://' . $domain['host'];
 
         .llar_weekly_digest_body__inner_column .llar_link {
             padding-top: 5px;
+        }
+
+        .llar_weekly_digest_body__inner_column .llar_link a {
             color: #4ACAD8;
+            text-decoration: none;
         }
 
         .llar_weekly_digest_body__inner_column .llar_link img {
@@ -255,7 +307,7 @@ $link = $domain['scheme'] . '://' . $domain['host'];
         }
 
         tfoot .llar_weekly_digest_body__content td {
-            padding: 27px 0 0;
+            padding: 0;
         }
 
         table.llar_additional {
@@ -273,7 +325,7 @@ $link = $domain['scheme'] . '://' . $domain['host'];
         }
 
         table.llar_additional  .llar__content_line hr {
-            border-color: rgba(164, 168, 183, 0.3);
+            border-color: rgba(164, 168, 183, 0.2);
         }
 
         table.llar_additional .llar__content_copyright td {
@@ -329,7 +381,7 @@ $link = $domain['scheme'] . '://' . $domain['host'];
                         <div>
 	                        <?php _e( 'from', 'limit-login-attempts-reloaded' ); ?>
                             <img class="llar_icon_calendar" src="<?php echo LLA_PLUGIN_URL . 'assets/css/images/calendar-min.png' ?>" alt="">
-	                        <?php _e( 'Aug 20 - Aug 26', 'limit-login-attempts-reloaded' ); ?>
+	                        <?php echo date_i18n( $date_format, $start_period ) . '-' . date_i18n( $date_format, $end_period ); ?>
                         </div>
                     </div>
                 </td>
@@ -344,24 +396,32 @@ $link = $domain['scheme'] . '://' . $domain['host'];
                                     <img class="llar_icon_column" src="<?php echo LLA_PLUGIN_URL . 'assets/css/images/deny-list-min.png' ?>" alt="">
                                 </td>
                                 <td align="left" class="llar_digit">
-                                    10.4K
+                                    <?php echo Helpers::format_number_short($count_attempts) ?>
                                 </td>
                                 <td align="left" class="llar_arrow">
                                     <div class="llar_arrow_left">
-                                        <img src="<?php echo LLA_PLUGIN_URL . 'assets/css/images/red-arrow-min.png' ?>" alt="">
-                                        5.1k
+                                        <?php
+                                            echo ( $count_attempts < $count_last_attempts )
+                                                ? $red_arrow
+                                                : ( ( $count_attempts === $count_last_attempts )
+                                                    ? '='
+                                                    : $green_arrow );
+                                            echo Helpers::format_number_short( $count_last_attempts )
+                                        ?>
                                     </div>
                                 </td>
                             </tr>
                             <tr>
                                 <td colspan="2" class="llar_desc">
-                                    Failed login attempts
+	                                <?php _e( 'Failed login attempts', 'limit-login-attempts-reloaded' ); ?>
                                 </td>
                             </tr>
                             <tr>
                                 <td colspan="2" class="llar_link">
-                                    View logs
-                                    <img src="<?php echo LLA_PLUGIN_URL . 'assets/css/images/arrow-min.png' ?>" alt="">
+                                    <a href="<?php echo $site_link . '/wp-admin/admin.php?page=limit-login-attempts&tab=logs-local' ?>" target="_blank">
+	                                    <?php _e( 'View logs', 'limit-login-attempts-reloaded' ); ?>
+                                        <img src="<?php echo LLA_PLUGIN_URL . 'assets/css/images/arrow-min.png' ?>" alt="">
+                                    </a>
                                 </td>
                             </tr>
                             </tbody>
@@ -377,24 +437,32 @@ $link = $domain['scheme'] . '://' . $domain['host'];
                                     <img class="llar_icon_column" src="<?php echo LLA_PLUGIN_URL . 'assets/css/images/shield-min.png' ?>" alt="">
                                 </td>
                                 <td class="llar_digit">
-                                    595
+	                                <?php echo Helpers::format_number_short($count_lockout) ?>
                                 </td>
                                 <td class="llar_arrow">
                                     <div class="llar_arrow_left">
-                                        <img src="<?php echo LLA_PLUGIN_URL . 'assets/css/images/green-arrow-min.png' ?>" alt="">
-                                        100
+                                        <?php
+                                        echo ( $count_lockout < $count_last_lockout )
+                                                ? $red_arrow
+                                                : ( ( $count_lockout === $count_last_lockout )
+                                                    ? '='
+                                                    : $green_arrow );
+	                                    echo Helpers::format_number_short($count_last_lockout)
+                                        ?>
                                     </div>
                                 </td>
                             </tr>
                             <tr>
                                 <td colspan="2" class="llar_desc">
-                                    Lockouts
+	                                <?php _e( 'Lockouts', 'limit-login-attempts-reloaded' ); ?>
                                 </td>
                             </tr>
                             <tr>
                                 <td colspan="2" class="llar_link">
-                                    Manage IPs
-                                    <img src="<?php echo LLA_PLUGIN_URL . 'assets/css/images/arrow-min.png' ?>" alt="">
+                                    <a href="<?php echo $site_link . '/wp-admin/admin.php?page=limit-login-attempts&tab=logs-local' ?>" target="_blank">
+	                                    <?php _e( 'Manage IPs', 'limit-login-attempts-reloaded' ); ?>
+                                        <img src="<?php echo LLA_PLUGIN_URL . 'assets/css/images/arrow-min.png' ?>" alt="">
+                                    </a>
                                 </td>
                             </tr>
                             </tbody>
@@ -419,7 +487,7 @@ $link = $domain['scheme'] . '://' . $domain['host'];
             <tr class="llar_weekly_digest_body__button">
                 <td colspan="4" align="center">
                     <div class="llar_button">
-                        <a href="{dashboard_url}" class="llar_button_link " target="_blank">
+                        <a href="<?php echo $site_link . '/wp-admin/admin.php?page=limit-login-attempts&tab=dashboard' ?>" class="llar_button_link " target="_blank">
 	                        <?php _e( 'Go To Dashboard', 'limit-login-attempts-reloaded' ); ?>
                         </a>
                     </div>
@@ -445,7 +513,7 @@ $link = $domain['scheme'] . '://' . $domain['host'];
             <tr class="llar_weekly_digest_body__button">
                 <td colspan="4" align="center">
                     <div class="llar_button">
-                        <a href="{dashboard_url}" class="llar_button_link " target="_blank">
+                        <a href="<?php echo $site_link . '/wp-admin/admin.php?page=limit-login-attempts&tab=premium' ?>" class="llar_button_link " target="_blank">
 	                        <?php _e( 'View Plans & Pricing', 'limit-login-attempts-reloaded' ); ?>
                         </a>
                     </div>

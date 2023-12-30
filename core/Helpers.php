@@ -359,4 +359,18 @@ class Helpers {
 	public static function wp_locale() {
 		return str_replace( '_', '-', get_locale() );
 	}
+
+	public static function format_number_short( $number ) {
+		$suffix = '';
+
+		if ( (int)$number >= 1000000 ) {
+			$suffix = 'M';
+			$number /= 1000000;
+		} elseif ( (int)$number >= 1000 ) {
+			$number /= 1000;
+			$suffix = 'k';
+		}
+
+		return round( $number, 1 ) . $suffix;
+	}
 }
