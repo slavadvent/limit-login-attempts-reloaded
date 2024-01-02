@@ -6,8 +6,10 @@ use LLAR\Core\Helpers;
 if ( ! defined( 'ABSPATH' ) ) {
 	exit();
 }
+
 $domain = parse_url( home_url( '/' ) );
 $site_link = $domain['scheme'] . '://' . $domain['host'];
+
 $date_format = trim( get_option( 'date_format' ), ' yY,._:;-/\\' );
 $date_format = str_replace( 'F', 'M', $date_format );
 
@@ -56,7 +58,7 @@ $green_arrow = '<img src="' . LLA_PLUGIN_URL . 'assets/css/images/green-arrow-mi
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" style="font-family:arial, 'helvetica neue', helvetica, sans-serif">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="Content-Type" content="text/html charset=UTF-8" />

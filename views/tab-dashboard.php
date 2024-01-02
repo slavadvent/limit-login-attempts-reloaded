@@ -9,6 +9,8 @@ if( !defined( 'ABSPATH' ) ) exit();
 
 $active_app = Config::get( 'active_app' );
 $active_app = ( $active_app === 'custom' && LimitLoginAttempts::$cloud_app ) ? 'custom' : 'local';
+
+//$this->send_notifications_mail();
 ?>
 
 <div id="llar-dashboard-page">

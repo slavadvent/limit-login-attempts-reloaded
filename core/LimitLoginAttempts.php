@@ -77,10 +77,12 @@ class LimitLoginAttempts {
 
 		add_action( 'admin_init', array( $this, 'dashboard_page_redirect' ), 9999 );
 		add_action( 'admin_init', array( $this, 'setup_cookie' ), 10 );
+		add_action( 'admin_init', array( $this, 'schedule_notifications_mail' ), 10 );
 
 		add_action( 'login_footer', array( $this, 'login_page_gdpr_message' ) );
 		add_action( 'login_footer', array( $this, 'login_page_render_js' ), 9999 );
 		add_action( 'wp_footer', array( $this, 'login_page_render_js' ), 9999 );
+		add_action( 'send_notifications_mail', array( $this, 'send_notifications_mail' ) );
 
 		if( !Config::get( 'hide_dashboard_widget' ) )
 		    add_action( 'wp_dashboard_setup', array( $this, 'register_dashboard_widgets' ) );
@@ -107,6 +109,42 @@ class LimitLoginAttempts {
 
 		if (empty($_COOKIE[$cookie_name])) {
 			setcookie($cookie_name, '1', strtotime( 'tomorrow' ));
+		}
+	}
+
+
+	public function schedule_notifications_mail()
+    {
+	    if (! wp_next_scheduled( 'send_notifications_mail'  ) ) {
+
+//		    wp_schedule_event( strtotime( 'next Sunday 14:00' ), 'weekly', 'send_notifications_mail' );
+		    wp_schedule_event( strtotime( 'now' ), 'weekly', 'send_notifications_mail' );
+	    }
+    }
+
+	public function send_notifications_mail() {
+
+//		$user_email = get_the_author_meta('user_email', $user_id);
+		$user_email = 'slava2slova@gmail.com';
+
+//		if ( is_notifications_mail() ) {
+		if ( true ) {
+
+			ob_start();
+			include_once (LLA_PLUGIN_DIR . 'views/emails/security-report.php');
+			$message = ob_get_clean();
+			$subject = 'weekly_digest';
+
+			$sent = @wp_mail($user_email, $subject, $message, array( 'content-type: text/html' ));
+
+//			var_dump($message);
+//			var_dump($sent);
+
+//			if ($sent) {
+//
+//			} else {
+//				error_log('Error!');
+//			}
 		}
 	}
 
@@ -617,9 +655,9 @@ class LimitLoginAttempts {
 
 
 	// delete after setting up the letter
-	public function my_plugin_view_email_page() {
-		echo require LLA_PLUGIN_DIR . '/views/emails/security-report.php';
-	}
+//	public function my_plugin_view_email_page() {
+//		echo require LLA_PLUGIN_DIR . '/views/emails/security-report.php';
+//	}
 	// delete after setting up the letter
 
 
@@ -631,13 +669,13 @@ class LimitLoginAttempts {
 
 
 			// delete after setting up the letter
-            add_menu_page(
-                    'View Email',
-                    'View Email',
-                    'manage_options',
-                    'view-email',
-	            array( $this, 'my_plugin_view_email_page' )
-            );
+//            add_menu_page(
+//                    'View Email',
+//                    'View Email',
+//                    'manage_options',
+//                    'view-email',
+//	            array( $this, 'my_plugin_view_email_page' )
+//            );
 			// delete after setting up the letter
 
 
