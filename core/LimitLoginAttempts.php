@@ -77,12 +77,12 @@ class LimitLoginAttempts {
 
 		add_action( 'admin_init', array( $this, 'dashboard_page_redirect' ), 9999 );
 		add_action( 'admin_init', array( $this, 'setup_cookie' ), 10 );
-		add_action( 'admin_init', array( $this, 'schedule_notifications_mail' ), 10 );
+		add_action( 'admin_init', array( $this, 'schedule_digest_email' ), 10 );
 
 		add_action( 'login_footer', array( $this, 'login_page_gdpr_message' ) );
 		add_action( 'login_footer', array( $this, 'login_page_render_js' ), 9999 );
 		add_action( 'wp_footer', array( $this, 'login_page_render_js' ), 9999 );
-		add_action( 'send_notifications_mail', array( $this, 'send_notifications_mail' ) );
+		add_action( 'send_digest_email', array( $this, 'send_digest_email' ) );
 
 		if( !Config::get( 'hide_dashboard_widget' ) )
 		    add_action( 'wp_dashboard_setup', array( $this, 'register_dashboard_widgets' ) );
@@ -113,39 +113,39 @@ class LimitLoginAttempts {
 	}
 
 
-	public function schedule_notifications_mail()
+	public function schedule_digest_email()
     {
-	    if (! wp_next_scheduled( 'send_notifications_mail'  ) ) {
+	    $get_digest_email = Config::get( 'digest_email' );
 
-//		    wp_schedule_event( strtotime( 'next Sunday 14:00' ), 'weekly', 'send_notifications_mail' );
-		    wp_schedule_event( strtotime( 'now' ), 'weekly', 'send_notifications_mail' );
+		if ( empty( $get_digest_email ) || $get_digest_email !== 'email' ) {
+			wp_unschedule_hook('send_digest_email');
+			return;
+		}
+
+	    if ( ! wp_next_scheduled( 'send_digest_email'  ) ) {
+
+		    wp_schedule_event( strtotime( 'next Sunday 10:00', current_time('timestamp') ), 'weekly', 'send_digest_email' );
+//		    wp_schedule_event( strtotime( 'tomorrow 10:00', current_time('timestamp') ), 'weekly', 'send_digest_email' );
 	    }
     }
 
-	public function send_notifications_mail() {
+	public function send_digest_email() {
 
-//		$user_email = get_the_author_meta('user_email', $user_id);
-		$user_email = 'slava2slova@gmail.com';
+		$get_digest_email = Config::get( 'digest_email' );
 
-//		if ( is_notifications_mail() ) {
-		if ( true ) {
-
-			ob_start();
-			include_once (LLA_PLUGIN_DIR . 'views/emails/security-report.php');
-			$message = ob_get_clean();
-			$subject = 'weekly_digest';
-
-			$sent = @wp_mail($user_email, $subject, $message, array( 'content-type: text/html' ));
-
-//			var_dump($message);
-//			var_dump($sent);
-
-//			if ($sent) {
-//
-//			} else {
-//				error_log('Error!');
-//			}
+		if ( empty( $get_digest_email ) || $get_digest_email !== 'email' ) {
+			return;
 		}
+
+		$user_email = Config::get( 'admin_notify_email' );
+
+        ob_start();
+        include_once LLA_PLUGIN_DIR . 'views/emails/security-report.php';
+        $message = ob_get_clean();
+
+        $subject = 'LLAR weekly_digest';
+
+		$sent = @wp_mail($user_email, $subject, $message, array( 'content-type: text/html' ));
 	}
 
 	public function register_dashboard_widgets() {
@@ -1659,6 +1659,12 @@ class LimitLoginAttempts {
                     $notify_methods[] = 'email';
                 }
                 Config::update('lockout_notify', implode( ',', $notify_methods ) );
+
+	            $digest_email = '';
+	            if( isset( $_POST[ 'digest_email' ] ) ) {
+		            $digest_email = 'email';
+	            }
+	            Config::update('digest_email', $digest_email );
 
 	            Config::sanitize_options();
 

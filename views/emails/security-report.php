@@ -10,6 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 $domain = parse_url( home_url( '/' ) );
 $site_link = $domain['scheme'] . '://' . $domain['host'];
 
+
 $date_format = trim( get_option( 'date_format' ), ' yY,._:;-/\\' );
 $date_format = str_replace( 'F', 'M', $date_format );
 
@@ -67,42 +68,25 @@ $green_arrow = '<img src="' . LLA_PLUGIN_URL . 'assets/css/images/green-arrow-mi
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta content="telephone=no" name="format-detection">
     <style type="text/css">
-        @font-face {
-            font-family: 'CoFo Sans';
-            src: url(<?php echo $site_link . '/wp-content/themes/llar/assets/fonts/CoFoSans-Regular.eot' ?>) format('embedded-opentype');
-            src: url(<?php echo $site_link . '/wp-content/themes/llar/assets/fonts/CoFoSans-Regular.woff' ?>) format('woff');
-            src: url(<?php echo $site_link . '/wp-content/themes/llar/assets/fonts/CoFoSans-Regular.woff2' ?>) format('woff2');
-            src: url(<?php echo $site_link . '/wp-content/themes/llar/assets/fonts/CoFoSans-Regular.ttf' ?>) format('truetype');
-            font-weight: 400;
-            font-style: normal;
-            font-display: swap;
-        }
 
-        @font-face {
-            font-family: 'CoFo Sans';
-            src: url(<?php echo $site_link . '/wp-content/themes/llar/assets/fonts/CoFoSans-Medium.eot' ?>) format('embedded-opentype');
-            src: url(<?php echo $site_link . '/wp-content/themes/llar/assets/fonts/CoFoSans-Medium.woff' ?>) format('woff');
-            src: url(<?php echo $site_link . '/wp-content/themes/llar/assets/fonts/CoFoSans-Medium.woff2' ?>) format('woff2');
-            src: url(<?php echo $site_link . '/wp-content/themes/llar/assets/fonts/CoFoSans-Medium.ttf' ?>) format('truetype');
-            font-weight: 500;
-            font-style: normal;
-            font-display: swap;
-        }
-
-        section.llar_weekly_digest {
-            width: 100%;
+        .body_llar_weekly_digest {
             background: #E2F1F7;
         }
 
         div.llar_weekly_digest {
             width: 600px;
-            font-family: CoFo Sans, arial;
+            font-family: Helvetica, Arial, sans-serif;
             font-style: normal;
+            letter-spacing: .4px;
             font-weight: 400;
             line-height: 1.5;
             color: #2A2F40;
             padding-top: 140px;
             margin: 0 auto;
+        }
+
+        .llar_weekly_digest .llar_link a {
+            color: #5C8FDC;
         }
 
         table.llar_weekly_digest_table {
@@ -133,7 +117,7 @@ $green_arrow = '<img src="' . LLA_PLUGIN_URL . 'assets/css/images/green-arrow-mi
 
         .llar_weekly_digest_body__title, .llar_weekly_digest__title {
             font-size: 24px;
-            font-weight: 500;
+            font-weight: 600;
             color: #2A2F40;
         }
 
@@ -149,7 +133,7 @@ $green_arrow = '<img src="' . LLA_PLUGIN_URL . 'assets/css/images/green-arrow-mi
 
         .llar_weekly_digest_body__desc .description {
             position: relative;
-            font-size: 14px;
+            font-size: 13px;
             color: #666D84;
             background-color: #FFFFFF;
             border-radius: 50px;
@@ -166,12 +150,12 @@ $green_arrow = '<img src="' . LLA_PLUGIN_URL . 'assets/css/images/green-arrow-mi
         .llar_weekly_digest_body__desc .site-name {
             position: relative;
             width: fit-content;
-            font-size: 14px;
+            font-size: 13px;
             color: #FF7C06;
             border-radius: 30px;
             border: 0.6px solid #FF7C06;
             background: rgb(255, 241, 234);
-            margin-bottom: -10px;
+            margin-bottom: -7px;
             padding: 2px 21px;
             z-index: 1;
         }
@@ -201,18 +185,20 @@ $green_arrow = '<img src="' . LLA_PLUGIN_URL . 'assets/css/images/green-arrow-mi
         }
 
         .llar_weekly_digest_body__inner_column td {
+            font-family: Helvetica, Arial, sans-serif;
+            font-size: 12px;
             padding-top: 0;
         }
 
         .llar_weekly_digest_body__inner_column .llar_digit {
-            font-size: 16px;
-            font-weight: 500;
+            font-size: 15px;
+            font-weight: 600;
             color: #2A2F40;
             width: 30px;
         }
 
         .llar_weekly_digest_body__inner_column .llar_arrow {
-            font-size: 12px;
+            font-size: 11px;
             line-height: 1.5;
         }
 
@@ -247,13 +233,9 @@ $green_arrow = '<img src="' . LLA_PLUGIN_URL . 'assets/css/images/green-arrow-mi
             vertical-align: middle;
         }
 
-        .llar_weekly_digest_body__inner_column .desc {
-            width: 80%;
-        }
-
         .llar_weekly_digest_body__content {
             color: #666D84;
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 400;
         }
 
@@ -275,9 +257,9 @@ $green_arrow = '<img src="' . LLA_PLUGIN_URL . 'assets/css/images/green-arrow-mi
 
         .llar_weekly_digest_body__button .llar_button_link {
             display: block;
-            font-size: 16px;
+            font-size: 15px;
             color: #ffffff;
-            padding: 5px 35px;
+            padding: 9px 35px;
             text-decoration: none;
         }
 
@@ -294,7 +276,7 @@ $green_arrow = '<img src="' . LLA_PLUGIN_URL . 'assets/css/images/green-arrow-mi
         }
 
         .llar_weekly_digest__desc {
-            font-size: 18px;
+            font-size: 17px;
             color: #666D84;
         }
 
@@ -304,7 +286,7 @@ $green_arrow = '<img src="' . LLA_PLUGIN_URL . 'assets/css/images/green-arrow-mi
 
         tfoot .llar_weekly_digest_body__content {
             width: 100%;
-            font-size: 12px;
+            font-size: 11px;
             color: #666D84;
         }
 
@@ -313,6 +295,8 @@ $green_arrow = '<img src="' . LLA_PLUGIN_URL . 'assets/css/images/green-arrow-mi
         }
 
         table.llar_additional {
+            font-size: 11px;
+            color: #666D84;
             background-color: #F6FBFF;
             border-radius: 20px;
         }
@@ -339,21 +323,28 @@ $green_arrow = '<img src="' . LLA_PLUGIN_URL . 'assets/css/images/green-arrow-mi
             border: 1px solid #4ACAD8;
             border-radius: 20px;
             background-color: #ffffff;
-            padding: 1px 20px 5px;
+            padding: 3px 20px 3px;
         }
 
         table.llar_additional .llar__content_address td {
             color: #A4A8B7;
-            font-size: 12px;
+            font-size: 11px;
             padding: 0 20px 25px;
         }
 
-        strong {
-            font-weight: 500;
+        div.llar_weekly_digest strong {
+            font-weight: 600;
+        }
+
+        @media (max-width: 380px) {
+
+            div.llar_weekly_digest {
+                width: 375px;
+            }
         }
     </style>
 </head>
-<body class="llar_weekly_digest">
+<body class="body_llar_weekly_digest">
     <div class="llar_weekly_digest">
         <table class="llar_weekly_digest_table" width="100%" cellspacing="0" cellpadding="0">
             <thead class="llar_weekly_digest_header">
@@ -393,39 +384,39 @@ $green_arrow = '<img src="' . LLA_PLUGIN_URL . 'assets/css/images/green-arrow-mi
                         <div class="column_first">
                             <table class="llar_weekly_digest_body__inner_column">
                                 <tbody>
-                                <tr>
-                                    <td valign="top" rowspan="3">
-                                        <img class="llar_icon_column" src="<?php echo LLA_PLUGIN_URL . 'assets/css/images/deny-list-min.png' ?>" alt="">
-                                    </td>
-                                    <td align="left" class="llar_digit">
-                                        <?php echo Helpers::format_number_short($count_attempts) ?>
-                                    </td>
-                                    <td align="left" class="llar_arrow">
-                                        <div class="llar_arrow_left">
-                                            <?php
-                                                echo ( $count_attempts < $count_last_attempts )
-                                                    ? $red_arrow
-                                                    : ( ( $count_attempts === $count_last_attempts )
-                                                        ? '='
-                                                        : $green_arrow );
-                                                echo Helpers::format_number_short( $count_last_attempts )
-                                            ?>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2" class="llar_desc">
-                                        <?php _e( 'Failed login attempts', 'limit-login-attempts-reloaded' ); ?>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2" class="llar_link">
-                                        <a href="<?php echo $site_link . '/wp-admin/admin.php?page=limit-login-attempts&tab=logs-local' ?>" target="_blank">
-                                            <?php _e( 'View logs', 'limit-login-attempts-reloaded' ); ?>
-                                            <img src="<?php echo LLA_PLUGIN_URL . 'assets/css/images/arrow-min.png' ?>" alt="">
-                                        </a>
-                                    </td>
-                                </tr>
+                                    <tr>
+                                        <td valign="top" rowspan="3">
+                                            <img class="llar_icon_column" src="<?php echo LLA_PLUGIN_URL . 'assets/css/images/deny-list-min.png' ?>" alt="">
+                                        </td>
+                                        <td align="left" class="llar_digit">
+                                            <?php echo Helpers::format_number_short($count_attempts) ?>
+                                        </td>
+                                        <td align="left" class="llar_arrow">
+                                            <div class="llar_arrow_left">
+                                                <?php
+                                                    echo ( $count_attempts < $count_last_attempts )
+                                                        ? $red_arrow
+                                                        : ( ( $count_attempts === $count_last_attempts )
+                                                            ? '='
+                                                            : $green_arrow );
+                                                    echo Helpers::format_number_short( $count_last_attempts )
+                                                ?>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" class="llar_desc">
+                                            <?php _e( 'Failed login attempts', 'limit-login-attempts-reloaded' ); ?>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" class="llar_link">
+                                            <a href="<?php echo $site_link . '/wp-admin/admin.php?page=limit-login-attempts&tab=logs-local' ?>" target="_blank">
+                                                <?php _e( 'View logs', 'limit-login-attempts-reloaded' ); ?>
+                                                <img src="<?php echo LLA_PLUGIN_URL . 'assets/css/images/arrow-min.png' ?>" alt="">
+                                            </a>
+                                        </td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -434,39 +425,39 @@ $green_arrow = '<img src="' . LLA_PLUGIN_URL . 'assets/css/images/green-arrow-mi
                         <div class="column_second">
                             <table class="llar_weekly_digest_body__inner_column">
                                 <tbody>
-                                <tr>
-                                    <td valign="top" rowspan="3" class="image">
-                                        <img class="llar_icon_column" src="<?php echo LLA_PLUGIN_URL . 'assets/css/images/shield-min.png' ?>" alt="">
-                                    </td>
-                                    <td class="llar_digit">
-                                        <?php echo Helpers::format_number_short($count_lockout) ?>
-                                    </td>
-                                    <td class="llar_arrow">
-                                        <div class="llar_arrow_left">
-                                            <?php
-                                            echo ( $count_lockout < $count_last_lockout )
-                                                    ? $red_arrow
-                                                    : ( ( $count_lockout === $count_last_lockout )
-                                                        ? '='
-                                                        : $green_arrow );
-                                            echo Helpers::format_number_short($count_last_lockout)
-                                            ?>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2" class="llar_desc">
-                                        <?php _e( 'Lockouts', 'limit-login-attempts-reloaded' ); ?>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2" class="llar_link">
-                                        <a href="<?php echo $site_link . '/wp-admin/admin.php?page=limit-login-attempts&tab=logs-local' ?>" target="_blank">
-                                            <?php _e( 'Manage IPs', 'limit-login-attempts-reloaded' ); ?>
-                                            <img src="<?php echo LLA_PLUGIN_URL . 'assets/css/images/arrow-min.png' ?>" alt="">
-                                        </a>
-                                    </td>
-                                </tr>
+                                    <tr>
+                                        <td valign="top" rowspan="3" class="image">
+                                            <img class="llar_icon_column" src="<?php echo LLA_PLUGIN_URL . 'assets/css/images/shield-min.png' ?>" alt="">
+                                        </td>
+                                        <td class="llar_digit">
+                                            <?php echo Helpers::format_number_short($count_lockout) ?>
+                                        </td>
+                                        <td class="llar_arrow">
+                                            <div class="llar_arrow_left">
+                                                <?php
+                                                echo ( $count_lockout < $count_last_lockout )
+                                                        ? $red_arrow
+                                                        : ( ( $count_lockout === $count_last_lockout )
+                                                            ? '='
+                                                            : $green_arrow );
+                                                echo Helpers::format_number_short($count_last_lockout)
+                                                ?>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" class="llar_desc">
+                                            <?php _e( 'Lockouts', 'limit-login-attempts-reloaded' ); ?>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" class="llar_link">
+                                            <a href="<?php echo $site_link . '/wp-admin/admin.php?page=limit-login-attempts&tab=logs-local' ?>" target="_blank">
+                                                <?php _e( 'Manage IPs', 'limit-login-attempts-reloaded' ); ?>
+                                                <img src="<?php echo LLA_PLUGIN_URL . 'assets/css/images/arrow-min.png' ?>" alt="">
+                                            </a>
+                                        </td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -474,12 +465,12 @@ $green_arrow = '<img src="' . LLA_PLUGIN_URL . 'assets/css/images/green-arrow-mi
                 </tr>
                 <tr class="llar_weekly_digest_body__content">
                     <td colspan="4" align="center">
-                        <div>
+                        <div class="llar_link">
                             <?php echo sprintf(
                                 __( 'To view this data, you\'ll need to <a href="%s" target="_blank">upgrade to our premium app.</a>', 'limit-login-attempts-reloaded' ),
                                 'https://www.limitloginattempts.com/upgrade/' ); ?>
                         </div>
-                        <div>
+                        <div class="llar_link">
                             <?php echo sprintf(
                                 __( 'Not ready for premium? Try our <a href="%s" target="_blank">Micro Cloud</a> service complete free for limited monthly access to our premium features and protection.', 'limit-login-attempts-reloaded' ),
                                 'https://www.limitloginattempts.com/upgrade/' ); ?>
@@ -526,7 +517,7 @@ $green_arrow = '<img src="' . LLA_PLUGIN_URL . 'assets/css/images/green-arrow-mi
                         <table class="llar_additional">
                             <tbody>
                                 <tr>
-                                    <td align="center">
+                                    <td align="center" class="llar_link">
                                         <?php echo sprintf(
                                             __( 'This message was sent to <strong>greg@tripshock.com, </strong>which is designed as the admin email for the Limit Login Attempts Reloaded Plugin on www.domain.com. If you no longer wish to receive these emails, please go to yours <a href="%s" target="_blank">settings whithin the plugin dashboard</a> to disabled these notifications.', 'limit-login-attempts-reloaded' ),
                                             'https://www.limitloginattempts.com/upgrade/' ); ?>

@@ -14,6 +14,8 @@ $gdpr_message = Config::get( 'gdpr_message' );
 
 $v = explode( ',', Config::get( 'lockout_notify' ) );
 $email_checked = in_array( 'email', $v ) ? ' checked ' : '';
+$get_digest_email = Config::get( 'digest_email' );
+$digest_email_checked = ( $get_digest_email === 'email' || $get_digest_email === null)  ? ' checked ' : '';
 
 $show_top_level_menu_item = Config::get( 'show_top_level_menu_item' );
 $show_top_bar_menu_item = Config::get( 'show_top_bar_menu_item' );
@@ -77,11 +79,11 @@ $active_app_config = Config::get( 'app_config' );
                 </td>
             </tr>
             <tr>
-                <th scope="row"
-                    valign="top"><?php echo __( 'GDPR message', 'limit-login-attempts-reloaded' ); ?>
+                <th scope="row" valign="top"><?php echo __( 'GDPR message', 'limit-login-attempts-reloaded' ); ?>
                     <i class="llar-tooltip" data-text="<?php esc_attr_e( 'This message will appear at the bottom of the login page.', 'limit-login-attempts-reloaded' ); ?>">
                         <span class="dashicons dashicons-editor-help"></span>
-                    </i></th>
+                    </i>
+                </th>
                 <td>
                     <textarea name="gdpr_message" cols="60"><?php echo esc_textarea( stripslashes( $gdpr_message ) ); ?></textarea>
                     <p class="description"><?php echo __( 'You can use a shortcode here to insert links, for example, a link to your Privacy Policy page. <br>The shortcode is: [llar-link url="https://example.com" text="Privacy Policy"]', 'limit-login-attempts-reloaded' ); ?></p>
@@ -112,6 +114,19 @@ $active_app_config = Config::get( 'app_config' );
                             __( 'It\'s not uncommon for web hosts to turn off emails for plugins as a security measure.<br>We\'ve <a href="%s" target="_blank">created an article</a> to troubleshoot common email deliverability issues.', 'limit-login-attempts-reloaded' ),
                             'https://www.limitloginattempts.com/troubleshooting-guide-fixing-issues-with-non-functioning-emails-from-your-wordpress-site/'
                         ); ?></p>
+                </td>
+            </tr>
+
+            <tr>
+                <th scope="row" valign="top"><?php echo __( 'Weekly Digest', 'limit-login-attempts-reloaded' ); ?>
+                    <i class="llar-tooltip" data-text="<?php esc_attr_e( 'This message will appear at the bottom of the login page.', 'limit-login-attempts-reloaded' ); ?>">
+                        <span class="dashicons dashicons-editor-help"></span>
+                    </i>
+                </th>
+                <td>
+                    <input type="checkbox" name="digest_email" <?php echo $digest_email_checked; ?>
+                           value="email"/>
+	                <?php echo __( 'Receive a weekly digest that includes a recap of your failed logins and lockout notifications. Premium users will be able to see additional data such as countries and IPs with most failed logins.' ); ?>
                 </td>
             </tr>
 
