@@ -74,7 +74,7 @@ $green_arrow = '<img src="' . LLA_PLUGIN_URL . 'assets/css/images/green-arrow-mi
         }
 
         div.llar_weekly_digest {
-            width: 600px;
+            max-width: 600px;
             font-family: Helvetica, Arial, sans-serif;
             font-style: normal;
             letter-spacing: .4px;
@@ -170,6 +170,10 @@ $green_arrow = '<img src="' . LLA_PLUGIN_URL . 'assets/css/images/green-arrow-mi
             background-color: #ffffff;
             border-radius: 10px;
             padding: 20px 20px;
+        }
+
+        .llar_weekly_digest_body__columns.llar_mobil {
+            display: none;
         }
 
         .llar_weekly_digest_body__columns .column_first {
@@ -336,17 +340,82 @@ $green_arrow = '<img src="' . LLA_PLUGIN_URL . 'assets/css/images/green-arrow-mi
             font-weight: 600;
         }
 
-        @media (max-width: 380px) {
+        @media (max-width: 400px) {
 
             div.llar_weekly_digest {
                 width: 375px;
+            }
+
+            .llar_weekly_digest_body__desc .description {
+                font-size: 11px;
+                width: 220px;
+            }
+
+            .llar_weekly_digest_body__desc .site-name {
+                font-size: 11px;
+            }
+
+            .llar_weekly_digest_body__title, .llar_weekly_digest__title {
+                font-size: 18px;
+                width: 220px;
+            }
+
+            .llar_weekly_digest_body__content {
+                font-size: 11px;
+            }
+
+            .llar_weekly_digest_body__content td {
+                padding: 15px;
+            }
+
+            .llar_weekly_digest_body__columns {
+                display: none;
+            }
+
+            .llar_weekly_digest_body__columns.llar_mobil {
+                display: table-row;
+            }
+
+            .llar_weekly_digest_body__columns .column_first,
+            .llar_weekly_digest_body__columns .column_second {
+                margin: 0 auto;
+            }
+
+            .llar_weekly_digest_body__inner_column td {
+                font-size: 11px;
+            }
+
+            .llar_weekly_digest_body__inner_column .llar_digit {
+                font-size: 14px;
+            }
+
+            .llar_weekly_digest_body__button .llar_button {
+                width: 180px;
+                margin: 18px auto 20px;
+            }
+
+            .llar_weekly_digest_body__button .llar_button_link {
+                font-size: 14px;
+                padding: 9px 20px;
+            }
+
+            tfoot .illustration img {
+                width: 220px;
+            }
+
+            .llar_weekly_digest__desc {
+                font-size: 15px;
+            }
+
+            table.llar_additional .llar__content_copyright .copyright {
+                width: 190px;
             }
         }
     </style>
 </head>
 <body class="body_llar_weekly_digest">
     <div class="llar_weekly_digest">
-        <table class="llar_weekly_digest_table" width="100%" cellspacing="0" cellpadding="0">
+        <table class="llar_weekly_digest_table" cellspacing="0" cellpadding="0">
             <thead class="llar_weekly_digest_header">
                 <tr>
                     <td valign="top" colspan="4" align="center">
@@ -379,7 +448,9 @@ $green_arrow = '<img src="' . LLA_PLUGIN_URL . 'assets/css/images/green-arrow-mi
                         </div>
                     </td>
                 </tr>
+
                 <tr class="llar_weekly_digest_body__columns">
+	                <?php ob_start() ?>
                     <td colspan="2" align="center">
                         <div class="column_first">
                             <table class="llar_weekly_digest_body__inner_column">
@@ -421,6 +492,8 @@ $green_arrow = '<img src="' . LLA_PLUGIN_URL . 'assets/css/images/green-arrow-mi
                             </table>
                         </div>
                     </td>
+	                <?php $column_first = ob_get_clean() ?>
+	                <?php ob_start() ?>
                     <td colspan="2" align="center">
                         <div class="column_second">
                             <table class="llar_weekly_digest_body__inner_column">
@@ -462,6 +535,15 @@ $green_arrow = '<img src="' . LLA_PLUGIN_URL . 'assets/css/images/green-arrow-mi
                             </table>
                         </div>
                     </td>
+                </tr>
+                <?php $column_second = ob_get_clean() ?>
+                <?php echo $column_first ?>
+                <?php echo $column_second ?>
+                <tr class="llar_weekly_digest_body__columns llar_mobil">
+	                <?php echo $column_first ?>
+                </tr>
+                <tr class="llar_weekly_digest_body__columns llar_mobil">
+	                <?php echo $column_second ?>
                 </tr>
                 <tr class="llar_weekly_digest_body__content">
                     <td colspan="4" align="center">
