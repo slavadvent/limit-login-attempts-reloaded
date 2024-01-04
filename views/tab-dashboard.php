@@ -9,9 +9,6 @@ if( !defined( 'ABSPATH' ) ) exit();
 
 $active_app = Config::get( 'active_app' );
 $active_app = ( $active_app === 'custom' && LimitLoginAttempts::$cloud_app ) ? 'custom' : 'local';
-
-//$this->send_digest_email();
-//var_dump(wp_next_scheduled('send_digest_email'));
 ?>
 
 <div id="llar-dashboard-page">

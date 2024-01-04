@@ -10,13 +10,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 $domain = parse_url( home_url( '/' ) );
 $site_link = $domain['scheme'] . '://' . $domain['host'];
 
-
 $date_format = trim( get_option( 'date_format' ), ' yY,._:;-/\\' );
 $date_format = str_replace( 'F', 'M', $date_format );
 
 // It's all about the transition 24:00:00, which is equal to 00:00:00 the next day
 // We determine the date today and at 00:00:00
-$today = date_i18n( 'Y-m-d 00:00:00', strtotime( 'now' ) );
+$today = date_i18n( 'Y-m-d 00:00:00', strtotime( 'now', current_time('timestamp') ) );
+
 // Subtract 1 second and get - yesterday
 $start_period = strtotime( $today ) - 1;
 // A week is minus 7 days and + 1 second
@@ -201,14 +201,14 @@ $green_arrow = '<img src="' . LLA_PLUGIN_URL . 'assets/css/images/green-arrow-mi
             width: 30px;
         }
 
-        .llar_weekly_digest_body__inner_column .llar_arrow {
+        .llar_weekly_digest_body__inner_column .llar_last_digit {
             font-size: 11px;
             line-height: 1.5;
         }
 
         .llar_weekly_digest_body__inner_column .llar_arrow .llar_arrow_left {
             width: fit-content;
-            padding: 0 10px;
+            padding: 0 15px;
             background-color: rgba(236, 70, 82, 0.06);
             border-radius: 20px;
         }
@@ -221,6 +221,7 @@ $green_arrow = '<img src="' . LLA_PLUGIN_URL . 'assets/css/images/green-arrow-mi
         .llar_weekly_digest_body__inner_column .llar_desc {
             color: #666D84;
             width: 100%;
+            padding-top: 5px;
         }
 
         .llar_weekly_digest_body__inner_column .llar_link {
@@ -459,18 +460,18 @@ $green_arrow = '<img src="' . LLA_PLUGIN_URL . 'assets/css/images/green-arrow-mi
                                         <td valign="top" rowspan="3">
                                             <img class="llar_icon_column" src="<?php echo LLA_PLUGIN_URL . 'assets/css/images/deny-list-min.png' ?>" alt="">
                                         </td>
-                                        <td align="left" class="llar_digit">
-                                            <?php echo Helpers::format_number_short($count_attempts) ?>
+                                        <td align="left" class="llar_last_digit">
+                                            <?php echo Helpers::format_number_short( $count_last_attempts ) ?>
                                         </td>
-                                        <td align="left" class="llar_arrow">
+                                        <td align="left" class="llar_digit llar_arrow">
                                             <div class="llar_arrow_left">
                                                 <?php
                                                     echo ( $count_attempts < $count_last_attempts )
-                                                        ? $red_arrow
+                                                        ? $green_arrow
                                                         : ( ( $count_attempts === $count_last_attempts )
                                                             ? '='
-                                                            : $green_arrow );
-                                                    echo Helpers::format_number_short( $count_last_attempts )
+                                                            : $red_arrow );
+                                                    echo Helpers::format_number_short( $count_attempts )
                                                 ?>
                                             </div>
                                         </td>
@@ -502,18 +503,18 @@ $green_arrow = '<img src="' . LLA_PLUGIN_URL . 'assets/css/images/green-arrow-mi
                                         <td valign="top" rowspan="3" class="image">
                                             <img class="llar_icon_column" src="<?php echo LLA_PLUGIN_URL . 'assets/css/images/shield-min.png' ?>" alt="">
                                         </td>
-                                        <td class="llar_digit">
-                                            <?php echo Helpers::format_number_short($count_lockout) ?>
+                                        <td class="llar_last_digit">
+                                            <?php echo Helpers::format_number_short( $count_last_lockout ) ?>
                                         </td>
-                                        <td class="llar_arrow">
+                                        <td class="llar_digit llar_arrow">
                                             <div class="llar_arrow_left">
                                                 <?php
                                                 echo ( $count_lockout < $count_last_lockout )
-                                                        ? $red_arrow
+                                                        ? $green_arrow
                                                         : ( ( $count_lockout === $count_last_lockout )
                                                             ? '='
-                                                            : $green_arrow );
-                                                echo Helpers::format_number_short($count_last_lockout)
+                                                            : $red_arrow );
+                                                echo Helpers::format_number_short( $count_lockout )
                                                 ?>
                                             </div>
                                         </td>

@@ -77,7 +77,7 @@ class LimitLoginAttempts {
 
 		add_action( 'admin_init', array( $this, 'dashboard_page_redirect' ), 9999 );
 		add_action( 'admin_init', array( $this, 'setup_cookie' ), 10 );
-		add_action( 'admin_init', array( $this, 'schedule_digest_email' ), 10 );
+		add_action( 'init', array( $this, 'schedule_digest_email' ), 10 );
 
 		add_action( 'login_footer', array( $this, 'login_page_gdpr_message' ) );
 		add_action( 'login_footer', array( $this, 'login_page_render_js' ), 9999 );
@@ -118,14 +118,13 @@ class LimitLoginAttempts {
 	    $get_digest_email = Config::get( 'digest_email' );
 
 		if ( empty( $get_digest_email ) || $get_digest_email !== 'email' ) {
-			wp_unschedule_hook('send_digest_email');
+			wp_unschedule_hook( 'send_digest_email' );
 			return;
 		}
 
 	    if ( ! wp_next_scheduled( 'send_digest_email'  ) ) {
 
 		    wp_schedule_event( strtotime( 'next Sunday 10:00', current_time('timestamp') ), 'weekly', 'send_digest_email' );
-//		    wp_schedule_event( strtotime( 'tomorrow 10:00', current_time('timestamp') ), 'weekly', 'send_digest_email' );
 	    }
     }
 
@@ -654,31 +653,10 @@ class LimitLoginAttempts {
 	}
 
 
-	// delete after setting up the letter
-//	public function my_plugin_view_email_page() {
-//		echo require LLA_PLUGIN_DIR . '/views/emails/security-report.php';
-//	}
-	// delete after setting up the letter
-
-
-
 	public function admin_menu() {
 		global $submenu;
 
 		if( Config::get( 'show_top_level_menu_item' ) ) {
-
-
-			// delete after setting up the letter
-//            add_menu_page(
-//                    'View Email',
-//                    'View Email',
-//                    'manage_options',
-//                    'view-email',
-//	            array( $this, 'my_plugin_view_email_page' )
-//            );
-			// delete after setting up the letter
-
-
 
 			add_menu_page(
                 'Limit Login Attempts',
