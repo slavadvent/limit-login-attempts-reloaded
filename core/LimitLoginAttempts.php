@@ -112,22 +112,30 @@ class LimitLoginAttempts {
 		}
 	}
 
-
+	/**
+	 * Cron digest schedule
+	 */
 	public function schedule_digest_email()
     {
 	    $get_digest_email = Config::get( 'digest_email' );
+	    $current_time = current_time('timestamp');
 
-		if ( empty( $get_digest_email ) || $get_digest_email !== 'email' ) {
-			wp_unschedule_hook( 'send_digest_email' );
-			return;
-		}
+	    if ( $get_digest_email === null ) {
+
+		    Config::update('digest_email', 'email' ); // Mailing should be enabled by default
+		    $current_time = strtotime('+7 days', $current_time);
+        }
+
+	    $next_sunday = strtotime('next Sunday 10:00', $current_time);
 
 	    if ( ! wp_next_scheduled( 'send_digest_email'  ) ) {
-
-		    wp_schedule_event( strtotime( 'next Sunday 10:00', current_time('timestamp') ), 'weekly', 'send_digest_email' );
+		    wp_schedule_event( $next_sunday, 'weekly', 'send_digest_email' );
 	    }
     }
 
+	/**
+	 * Send email weekly digest security-report
+	 */
 	public function send_digest_email() {
 
 		$get_digest_email = Config::get( 'digest_email' );
