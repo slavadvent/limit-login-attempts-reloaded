@@ -14,8 +14,8 @@ $gdpr_message = Config::get( 'gdpr_message' );
 
 $v = explode( ',', Config::get( 'lockout_notify' ) );
 $email_checked = in_array( 'email', $v ) ? ' checked ' : '';
-$get_digest_email = Config::get( 'digest_email' );
-$digest_email_checked = ( $get_digest_email === 'email' || $get_digest_email === null)  ? ' checked ' : '';
+$get_send_digest = Config::get( 'send_digest' );
+$digest_email_checked = ( $get_send_digest === 'true' || $get_send_digest === null )  ? ' checked ' : '';
 
 $show_top_level_menu_item = Config::get( 'show_top_level_menu_item' );
 $show_top_bar_menu_item = Config::get( 'show_top_bar_menu_item' );
@@ -117,6 +117,7 @@ $active_app_config = Config::get( 'app_config' );
                 </td>
             </tr>
 
+	        <?php if ( $active_app === 'local' ) : ?>
             <tr>
                 <th scope="row" valign="top"><?php echo __( 'Weekly Digest', 'limit-login-attempts-reloaded' ); ?>
                     <i class="llar-tooltip" data-text="<?php esc_attr_e( 'This message will appear at the bottom of the login page.', 'limit-login-attempts-reloaded' ); ?>">
@@ -124,11 +125,12 @@ $active_app_config = Config::get( 'app_config' );
                     </i>
                 </th>
                 <td>
-                    <input type="checkbox" name="digest_email" <?php echo $digest_email_checked; ?>
+                    <input type="checkbox" name="send_digest" <?php echo $digest_email_checked; ?>
                            value="email"/>
 	                <?php echo __( 'Receive a weekly digest that includes a recap of your failed logins and lockout notifications. Premium users will be able to see additional data such as countries and IPs with most failed logins.' ); ?>
                 </td>
             </tr>
+	        <?php endif; ?>
 
             <tr>
                 <th scope="row"

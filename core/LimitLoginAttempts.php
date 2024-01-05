@@ -82,7 +82,7 @@ class LimitLoginAttempts {
 		add_action( 'login_footer', array( $this, 'login_page_gdpr_message' ) );
 		add_action( 'login_footer', array( $this, 'login_page_render_js' ), 9999 );
 		add_action( 'wp_footer', array( $this, 'login_page_render_js' ), 9999 );
-		add_action( 'send_digest_email', array( $this, 'send_digest_email' ) );
+		add_action( 'cron_send_digest_email', array( $this, 'send_digest_email' ) );
 
 		if( !Config::get( 'hide_dashboard_widget' ) )
 		    add_action( 'wp_dashboard_setup', array( $this, 'register_dashboard_widgets' ) );
@@ -117,19 +117,27 @@ class LimitLoginAttempts {
 	 */
 	public function schedule_digest_email()
     {
-	    $get_digest_email = Config::get( 'digest_email' );
-	    $current_time = current_time('timestamp');
+	    if ( Config::get( 'active_app' ) !== 'local') {
 
-	    if ( $get_digest_email === null ) {
-
-		    Config::update('digest_email', 'email' ); // Mailing should be enabled by default
-		    $current_time = strtotime('+7 days', $current_time);
+		    if ( wp_next_scheduled( 'cron_send_digest_email' ) ) {
+			    wp_unschedule_hook( 'cron_send_digest_email' );
+		    }
+	        return;
         }
 
-	    $next_sunday = strtotime('next Sunday 10:00', $current_time);
+	    $get_send_digest = Config::get( 'send_digest' );
+	    $current_time = current_time( 'timestamp' );
 
-	    if ( ! wp_next_scheduled( 'send_digest_email'  ) ) {
-		    wp_schedule_event( $next_sunday, 'weekly', 'send_digest_email' );
+	    if ( $get_send_digest === null ) {
+
+		    Config::update('send_digest', 'true' ); // Mailing should be enabled by default
+		    $current_time = strtotime( '+7 days', $current_time );
+        }
+
+	    $next_sunday = strtotime( 'next Sunday 10:00', $current_time );
+
+	    if ( ! wp_next_scheduled( 'cron_send_digest_email' ) ) {
+		    wp_schedule_event( $next_sunday, 'weekly', 'cron_send_digest_email' );
 	    }
     }
 
@@ -138,9 +146,13 @@ class LimitLoginAttempts {
 	 */
 	public function send_digest_email() {
 
-		$get_digest_email = Config::get( 'digest_email' );
+		if ( Config::get( 'active_app' ) !== 'local') {
+		    return;
+        }
 
-		if ( empty( $get_digest_email ) || $get_digest_email !== 'email' ) {
+		$get_send_digest = Config::get( 'send_digest' );
+
+		if ( empty( $get_send_digest ) || $get_send_digest !== 'true' ) {
 			return;
 		}
 
@@ -1612,6 +1624,8 @@ class LimitLoginAttempts {
                     Config::update( 'gdpr', 0 );
                 }
 
+	            $active_app = Config::get( 'active_app' );
+
                 Config::update('show_top_level_menu_item', ( isset( $_POST['show_top_level_menu_item'] ) ? 1 : 0 ) );
                 Config::update('show_top_bar_menu_item', ( isset( $_POST['show_top_bar_menu_item'] ) ? 1 : 0 ) );
                 Config::update('hide_dashboard_widget', ( isset( $_POST['hide_dashboard_widget'] ) ? 1 : 0 ) );
@@ -1646,11 +1660,11 @@ class LimitLoginAttempts {
                 }
                 Config::update('lockout_notify', implode( ',', $notify_methods ) );
 
-	            $digest_email = '';
-	            if( isset( $_POST[ 'digest_email' ] ) ) {
-		            $digest_email = 'email';
-	            }
-	            Config::update('digest_email', $digest_email );
+                if ( $active_app === 'local' ) {
+
+	                $send_digest = isset( $_POST[ 'send_digest' ] ) ? 'true' : 'false';
+	                Config::update('send_digest', $send_digest );
+                }
 
 	            Config::sanitize_options();
 
